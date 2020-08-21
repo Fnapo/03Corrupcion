@@ -2,8 +2,10 @@
 # Inicio partido.cy
 
 class Partido(object):
-    def __init__(self, siglas: str, identificador=1):
+    def __init__(self, nombre: str, siglas: str, logo: str, identificador=1):
         self.identificador = identificador
+        self.nombre = nombre
         self.siglas = siglas
+        self.logo = logo
 
 # fin Partido
