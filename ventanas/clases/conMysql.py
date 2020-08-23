@@ -9,6 +9,9 @@ from mysql.connector import Error, errorcode
 class ConectarMysql(object):
     @staticmethod
     def conectar():
+        '''
+        Crea una conexión a una BBDD de MySQL
+        '''
         configuracion = {
             'user': 'root',
             'password': '',
@@ -19,11 +22,27 @@ class ConectarMysql(object):
             conex = conMysql.connect(**configuracion)
         except Error as error:
             print(f"Error en la conexión: {error.errno}")
+            return None
         else:
             print(f"Conexión correcta ... {conex}")
-            conex.close()
+            return conex
 
     # fin conectar()
+
+    @staticmethod
+    def insertar(conexion, consulta):
+        '''
+        Hace una inserción retornando el id del registro insertado
+        '''
+        cursor = conexion.cursor()
+        cursor.execute(consulta)
+        conexion.commit()
+        salida = cursor.lastrowid
+        cursor.close()
+
+        return salida
+
+    # fin insertar
 
 # fin class ConectarMysql
 

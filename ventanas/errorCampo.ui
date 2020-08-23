@@ -3,14 +3,14 @@
  <class>errorCampo</class>
  <widget class="QDialog" name="errorCampo">
   <property name="windowModality">
-   <enum>Qt::WindowModal</enum>
+   <enum>Qt::ApplicationModal</enum>
   </property>
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>200</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -22,13 +22,13 @@
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>200</height>
+    <height>250</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>400</width>
-    <height>200</height>
+    <height>250</height>
    </size>
   </property>
   <property name="font">
@@ -70,13 +70,13 @@
      <property name="minimumSize">
       <size>
        <width>280</width>
-       <height>60</height>
+       <height>120</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
        <width>280</width>
-       <height>60</height>
+       <height>120</height>
       </size>
      </property>
      <property name="font">
@@ -88,9 +88,10 @@
       <bool>false</bool>
      </property>
      <property name="styleSheet">
-      <string notr="true">background-color: rgb(230, 206, 240);
+      <string notr="true">background-color:rgb(181, 121, 0);
 border-color: rgb(255, 0, 0);
-border: 5 solid rgb(255, 0, 0);</string>
+border: 5 solid rgb(255, 0, 0);
+color: rgb(217, 217, 217);</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -103,6 +104,9 @@ border: 5 solid rgb(255, 0, 0);</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
+     </property>
+     <property name="wordWrap">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
