@@ -4,12 +4,37 @@ class PrepararInputs(object):
     '''
     Clase que prepara los inputs de un Formulario
     '''
+    
+    @staticmethod
+    def separarValorCampo(mensaje: str):
+        '''
+        Dado un mensaje de error tipo valor duplicado separa dicho valor y el campo donde se ha realizado dicha duplicación y los retorna
+        '''
+        inicioValor = mensaje.find("'")
+        finValor = mensaje.find("'", inicioValor + 1)+1
+        valor = mensaje[inicioValor:finValor]
+        inicioCampo = mensaje.find("idx_")+4
+        finCampo = mensaje.find("'", inicioCampo + 1)
+        campo = f"'{mensaje[inicioCampo:finCampo].capitalize()}'"
+
+        return valor, campo
+    #fin separarValorCampo
+
+    @staticmethod
+    def prepararMensajeDuplicado(valor, campo):
+        '''
+        Dado un valor duplicado y el campo correspondiente
+        devuelve el mensaje de error asociado
+        '''
+        return f"Error: el valor {valor} ya está usado en el campo {campo}."
+    # fin preparaMensajeDuplicado
+
     @staticmethod
     def prepararCadenaCap(cadena: str) -> str:
         '''
         Capitaliza Una Cadena
         '''
-        cadena = PrepararInputs.__quitarEspaciosCentrales(cadena)
+        cadena = PrepararInputs.quitarEspaciosCentrales(cadena)
 
         return cadena.strip().title()
     # fin prepararCadenaCap
@@ -19,13 +44,13 @@ class PrepararInputs(object):
         '''
         CONVIERTE A MAYÚSCULAS UNA CADENA
         '''
-        cadena = PrepararInputs.__quitarEspaciosCentrales(cadena)
+        cadena = PrepararInputs.quitarEspaciosCentrales(cadena)
 
         return cadena.strip().upper()
     # fin prepararCadenaMay
 
     @staticmethod
-    def __quitarEspaciosCentrales(cadena: str) -> str:
+    def quitarEspaciosCentrales(cadena: str) -> str:
         lista = cadena.split()
         cadena = ''
         for item in lista:
@@ -36,7 +61,7 @@ class PrepararInputs(object):
         # fin for
 
         return cadena
-    # fin __quitarEspaciosCentrales
+    # fin quitarEspaciosCentrales
 # fin class PrepararInputs
 
 # fin PrepararInputs

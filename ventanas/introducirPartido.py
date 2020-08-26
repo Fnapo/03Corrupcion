@@ -2,92 +2,110 @@
 
 import introducirPartido_ui as uiVip
 from PyQt5 import QtCore, QtGui, QtWidgets
-import clases.conMysql as cConMysql
-import prepararInputs as cPi
-import errorCampoModal as cEcm
-from mysql.connector import errorcode
+# from mysql.connector import errorcode
+from prepararInputs import PrepararInputs as cPi
+from clases.conMysql import ConectarMysql as cConMysql
+from errorCampoModal import ErrorCampoModal as cEcm
 
 
-class VentanaIntroducirPartido(QtWidgets.QDialog, uiVip.Ui_introducirPartido):
+class VentanaIntroducirPartido(
+        QtWidgets.QDialog, uiVip.Ui_introducirPartido, cConMysql):
+    '''
+    Ventana para insertar un Partido
+    '''
+
     def __init__(self):
         QtWidgets.QDialog.__init__(self)
-        self.setupUi(self)
-        self.botonLogo.clicked.connect(self.__buscarLogo)
-        self.botonAdd.clicked.connect(self.__addPartido)
+        try:
+            cConMysql.__init__(self)
+        except:
+            raise Exception
+        else:
+            self.setupUi(self)
+            self.botonLogo.clicked.connect(self._buscarLogo)
+            self.botonAdd.clicked.connect(self._accion)
+            self.botonRes.clicked.connect(self._resetear)
     # fin __init__
 
-    def __addPartido(self):
-        self.__prepararCampos()
-        if self.__validarCampos():
-            nombre, siglas, logo = self.__obtenerCampos()
-            conexion = cConMysql.ConectarMysql.conectar()
-            errorNumero = 0
-            consulta = f"INSERT INTO partidos (nombre, siglas, logo) VALUES ('{nombre}', '{siglas}', '{logo}')"
-            try:
-                cConMysql.ConectarMysql.insertar(conexion, consulta)
-            except Exception as error:
-                errorNumero = error.errno
-                errorNumero == errorcode.ER_DUP_ENTRY
-                cEcm.ErrorCampoModal.mostrar(error.msg)
-            else:
-                cEcm.ErrorCampoModal.mostrar("Inserción correcta ...")
-            finally:
-                if conexion.is_connected():
-                    conexion.close()
+    # def _correcto(self):
+    #     cEcm.mostrar("Operación correcta ...")
 
-            if errorNumero == 0:
-                self.close()
-        # fin if validar
-    # fin __addPartido
+    def _crearConsulta(self) -> str:
+        '''
+        Crea una consulta SQL dependiendo del objeto
+        '''
+        nombre, siglas, logo = self._obtenerCampos()
+        consulta = f"INSERT INTO partidos \
+            (nombre, siglas, logo) \
+            VALUES ('{nombre}', '{siglas}', '{logo}')"
 
-    def __validarCampos(self) -> bool:
+        return cPi.quitarEspaciosCentrales(consulta)
+    # fin _crearConsulta
+
+    def _validarCampos(self) -> bool:
         '''
         Devuelve True si los campos son válidos
         '''
-        nombre, siglas, logo = self.__obtenerCampos()
-        mensaje = "Campo vacío '{}'"
+        nombre, siglas, logo = self._obtenerCampos()
+        mensaje = "Campo vacío: '{}'"
+        errorCM = cEcm()
         if len(nombre) == 0:
-            cEcm.ErrorCampoModal.mostrar(mensaje.format("Nombre"))
+            errorCM.mostrar(mensaje.format("Nombre"))
             return False
         elif len(siglas) == 0:
-            cEcm.ErrorCampoModal.mostrar(mensaje.format("Siglas"))
+            errorCM.mostrar(mensaje.format("Siglas"))
             return False
         elif len(logo) == 0:
-            cEcm.ErrorCampoModal.mostrar(mensaje.format("Logo"))
+            errorCM.mostrar(mensaje.format("Logo"))
             return False
 
         return True
-    # fin __validarCampos
+    # fin _validarCampos
 
-    def __prepararCampos(self):
+    def _prepararCampos(self):
+        '''
+        Prepara el formato de los campos Inputs
+        '''
         nombre = self.inputNombre.text()
         siglas = self.inputSiglas.text()
-        self.inputNombre.setText(cPi.PrepararInputs.prepararCadenaCap(nombre))
-        self.inputSiglas.setText(cPi.PrepararInputs.prepararCadenaMay(siglas))
-    # fin __prepararCampos
+        self.inputNombre.setText(cPi.prepararCadenaCap(nombre))
+        self.inputSiglas.setText(cPi.prepararCadenaMay(siglas))
+    # fin _prepararCampos
 
-    def __obtenerCampos(self):
+    def _obtenerCampos(self):
         return self.inputNombre.text(), self.inputSiglas.text(), \
             self.inputLogo.text()
-    # fin __obtenerCampos
+    # fin _obtenerCampos
 
-    def __buscarLogo(self):
+    def _resetear(self):
+        self.inputNombre.setText("")
+        self.inputSiglas.setText("")
+        self.inputLogo.setText("")
+        miQpixmax = QtGui.QPixmap("")
+        self.labelLogo.setPixmap(miQpixmax)
+    # fin _resetear
+
+    def _buscarLogo(self):
         fNombre = QtWidgets.QFileDialog.getOpenFileName(
             self, "Buscando un Logo", ".\\imagenes", "Ficheros de imágenes (*.jpg *.gif *.jpeg)")
         if len(fNombre[0]) > 0:
             self.inputLogo.setText(fNombre[0])
             miQpixmax = QtGui.QPixmap(fNombre[0])
             self.labelLogo.setPixmap(miQpixmax.scaled(100, 100))
-    # fin buscarLogo
+    # fin _buscarLogo
 # fin clase VentanaIntroducirPartido
 
 
 if __name__ == "__main__":
     import sys
-    app = QtWidgets.QApplication(sys.argv)
-    ui = VentanaIntroducirPartido()
-    ui.show()
-    sys.exit(app.exec_())
+    try:
+        app = QtWidgets.QApplication(sys.argv)
+        ui = VentanaIntroducirPartido()
+    except:
+        pass
+    else:
+        ui.show()
+        sys.exit(app.exec_())
 # fin if test
 
 # fin introducirPartido.py

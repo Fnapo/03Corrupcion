@@ -91,7 +91,8 @@
       <string notr="true">background-color:rgb(181, 121, 0);
 border-color: rgb(255, 0, 0);
 border: 5 solid rgb(255, 0, 0);
-color: rgb(217, 217, 217);</string>
+color: rgb(217, 217, 217);
+padding: 5;</string>
      </property>
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>

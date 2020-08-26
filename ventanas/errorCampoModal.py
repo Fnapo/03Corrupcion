@@ -5,17 +5,19 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 
 
 class ErrorCampoModal(QtWidgets.QDialog, uiVec.Ui_errorCampo):
-    def __init__(self, mensaje: str):
+    def __init__(self, titulo="Error en un Campo"):
+        '''
+        Crea una ventana modal con un título dado
+        '''
         QtWidgets.QDialog.__init__(self)
         self.setupUi(self)
         self.botonAceptar.clicked.connect(self.close)
-        self.label01.setText(mensaje)
+        self.setWindowTitle(titulo)
     # fin __init__
-    
-    @staticmethod
-    def mostrar(mensaje: str):
-        error = ErrorCampoModal(mensaje)
-        error.exec()
+
+    def mostrar(self, mensaje: str):
+        self.label01.setText(mensaje)
+        self.exec()
     # fin mostrar
 # fin class ErrorCampoModal
 

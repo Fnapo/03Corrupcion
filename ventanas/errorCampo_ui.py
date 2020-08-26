@@ -44,7 +44,8 @@ class Ui_errorCampo(object):
         self.label01.setStyleSheet("background-color:rgb(181, 121, 0);\n"
 "border-color: rgb(255, 0, 0);\n"
 "border: 5 solid rgb(255, 0, 0);\n"
-"color: rgb(217, 217, 217);")
+"color: rgb(217, 217, 217);\n"
+"padding: 5;")
         self.label01.setFrameShape(QtWidgets.QFrame.NoFrame)
         self.label01.setLineWidth(5)
         self.label01.setAlignment(QtCore.Qt.AlignCenter)
