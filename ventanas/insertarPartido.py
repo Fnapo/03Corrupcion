@@ -1,15 +1,13 @@
-# inicio introducirPartido.py
+# inicio insertarPartido
 
-import introducirPartido_ui as uiVip
 from PyQt5 import QtCore, QtGui, QtWidgets
-# from mysql.connector import errorcode
-from prepararInputs import PrepararInputs as cPi
-from clases.conMysql import ConectarMysql as cConMysql
-from errorCampoModal import ErrorCampoModal as cEcm
+from prepararInputs import PrepararInputs
+from clases.conectarMysql import ConectarMysql
+from errorCampoModal import ErrorCampoModal
+from introducirPartido_ui import Ui_introducirPartido
 
 
-class VentanaIntroducirPartido(
-        QtWidgets.QDialog, uiVip.Ui_introducirPartido, cConMysql):
+class VentanaInsertarPartido(QtWidgets.QDialog, Ui_introducirPartido, ConectarMysql):
     '''
     Ventana para insertar un Partido
     '''
@@ -17,7 +15,7 @@ class VentanaIntroducirPartido(
     def __init__(self):
         QtWidgets.QDialog.__init__(self)
         try:
-            cConMysql.__init__(self)
+            ConectarMysql.__init__(self)
         except:
             raise Exception
         else:
@@ -26,9 +24,6 @@ class VentanaIntroducirPartido(
             self.botonAdd.clicked.connect(self._accion)
             self.botonRes.clicked.connect(self._resetear)
     # fin __init__
-
-    # def _correcto(self):
-    #     cEcm.mostrar("Operación correcta ...")
 
     def _crearConsulta(self) -> str:
         '''
@@ -39,7 +34,7 @@ class VentanaIntroducirPartido(
             (nombre, siglas, logo) \
             VALUES ('{nombre}', '{siglas}', '{logo}')"
 
-        return cPi.quitarEspaciosCentrales(consulta)
+        return PrepararInputs.quitarEspaciosCentrales(consulta)
     # fin _crearConsulta
 
     def _validarCampos(self) -> bool:
@@ -48,7 +43,7 @@ class VentanaIntroducirPartido(
         '''
         nombre, siglas, logo = self._obtenerCampos()
         mensaje = "Campo vacío: '{}'"
-        errorCM = cEcm()
+        errorCM = ErrorCampoModal()
         if len(nombre) == 0:
             errorCM.mostrar(mensaje.format("Nombre"))
             return False
@@ -68,8 +63,8 @@ class VentanaIntroducirPartido(
         '''
         nombre = self.inputNombre.text()
         siglas = self.inputSiglas.text()
-        self.inputNombre.setText(cPi.prepararCadenaCap(nombre))
-        self.inputSiglas.setText(cPi.prepararCadenaMay(siglas))
+        self.inputNombre.setText(PrepararInputs.prepararCadenaCap(nombre))
+        self.inputSiglas.setText(PrepararInputs.prepararCadenaMay(siglas))
     # fin _prepararCampos
 
     def _obtenerCampos(self):
@@ -100,7 +95,7 @@ if __name__ == "__main__":
     import sys
     try:
         app = QtWidgets.QApplication(sys.argv)
-        ui = VentanaIntroducirPartido()
+        ui = VentanaInsertarPartido()
     except:
         pass
     else:
@@ -108,4 +103,4 @@ if __name__ == "__main__":
         sys.exit(app.exec_())
 # fin if test
 
-# fin introducirPartido.py
+# fin insertarPartido

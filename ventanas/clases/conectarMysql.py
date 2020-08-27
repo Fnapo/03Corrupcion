@@ -2,8 +2,8 @@
 
 import mysql.connector as conMysql
 from mysql.connector import Error, errorcode
-from errorCampoModal import ErrorCampoModal as cEcm
-from prepararInputs import PrepararInputs as cPi
+from errorCampoModal import ErrorCampoModal
+from prepararInputs import PrepararInputs
 
 # inicio class ConectarMysql
 
@@ -41,17 +41,18 @@ class ConectarMysql(object):
                 try:
                     self._ejecutar(consulta)
                 except Exception as error:
-                    errorCM = cEcm()
+                    errorCM = ErrorCampoModal()
                     errorNumero = error.errno
                     if errorNumero == errorcode.ER_DUP_ENTRY:  # entrada duplicada
-                        valor, campo = cPi.separarValorCampo(
+                        valor, campo = PrepararInputs.separarValorCampo(
                             error.msg)
                         errorCM.mostrar(
-                            cPi.prepararMensajeDuplicado(valor, campo))
+                            PrepararInputs.prepararMensajeDuplicado(valor, campo))
                     else:
                         errorCM.mostrar(error.msg)
+                    # fin if entrada duplicada
                 else:
-                    self._correcto()
+                    self.correcto()
                 finally:
                     if self._conexion.is_connected():
                         self._conexion.close()
@@ -65,39 +66,51 @@ class ConectarMysql(object):
     # fin _accion
 
     @staticmethod
+    def errorNoRegistro(id: int):
+        ventanaError = ErrorCampoModal("Error de registro")
+        ventanaError.mostrar(f"El registro con 'id' = {id} no existe")
+    # fin errorNoRegistro
+    
+    @staticmethod
     def errorConexion():
-        errorCM = cEcm("Error en la conexión")
+        errorCM = ErrorCampoModal("Error en la conexión")
         errorCM.mostrar(
             f"Error en la conexión: Revisa los parámetros de la misma.")
-    # fin
+    # fin errorConexion
 
     def _obtenerCampos(self):
         '''
         Obtiene los valores de los campos Inputs
         '''
         pass
+    # fin _obtenerCampos
 
-    def _correcto(self):
-        errorCM = cEcm("Éxito en la operación")
+    @staticmethod
+    def correcto():
+        errorCM = ErrorCampoModal("Éxito en la operación")
         errorCM.mostrar("Operación correcta ...")
+    # fin correcto
 
     def _crearConsulta(self) -> str:
         '''
         Crea una consulta SQL dependiendo del objeto
         '''
         pass
+    # fin _crearConsulta
 
     def _prepararCampos(self):
         '''
         Prepara el formato de los campos Inputs
         '''
         pass
+    # fin _prepararCampos
 
     def _validarCampos(self) -> bool:
         '''
         Devuelve True si los campos son válidos
         '''
         pass
+    # fin _validarCampos
 
     def _conectar(self):
         '''
@@ -110,22 +123,12 @@ class ConectarMysql(object):
             raise Exception
         else:
             pass
-    # fin conectar
+    # fin _conectar
 
-    def _ejecutarSelect(self, consulta):
-        '''
-        Ejecuta una sentencia tipo SELECT
-        '''
-        palabras = consulta.split()
-        cursor = self._conexion.cursor()
-        cursor.execute(consulta)
-        self._conexion.commit()
-
-    def _ejecutar(self, consulta: str) -> int:
+    def _ejecutar(self, consulta: str):
         '''
         Ejecuta una consulta tipo CRUD (SIUD)
         '''
-        palabras = consulta.split()
         cursor = self._conexion.cursor()
         cursor.execute(consulta)
         self._conexion.commit()

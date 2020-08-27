@@ -1,24 +1,24 @@
-# inicio editarPartido
+# inicio ventanaEditarCargo
 
-from insertarPartido import VentanaInsertarPartido
+from cargo.ventanaInsertarCargo import VentanaInsertarCargo
 from PyQt5 import QtCore, QtGui, QtWidgets
-from prepararInputs import PrepararInputs
 from errorCampoModal import ErrorCampoModal
+from prepararInputs import PrepararInputs
 import mysql.connector as conMysql
 
 
-class VentanaEditarPartido(VentanaInsertarPartido):
+class VentanaEditarCargo(VentanaInsertarCargo):
     '''
-    Ventana para editar un Partido
+    Ventana para editar un Cargo
     '''
 
     def __init__(self, identificador: int):
         try:
-            VentanaInsertarPartido.__init__(self)
+            VentanaInsertarCargo.__init__(self)
             self.identificador = identificador
-            self.setWindowTitle("Editar un Partido")
-            self.botonAdd.setText("Editar Partido")
-            lista = self.obtenerPartido(self.identificador)
+            self.setWindowTitle("Editar un Cargo")
+            self.botonAceptar.setText("Editar Cargo")
+            lista = self.obtenerCargo(self.identificador)
             if len(lista) == 0:
                 self.errorNoRegistro(self.identificador)
                 raise Exception
@@ -29,33 +29,29 @@ class VentanaEditarPartido(VentanaInsertarPartido):
     # fin __init__
 
     def _resetear(self):
-        lista = self.obtenerPartido(self.identificador)
-        self.inputNombre.setText(lista[0][0])
-        self.inputSiglas.setText(lista[0][1])
-        self.inputLogo.setText(lista[0][2])
-        miQpixmax = QtGui.QPixmap(lista[0][2])
-        self.labelLogo.setPixmap(miQpixmax.scaled(100, 100))
+        lista = self.obtenerCargo(self.identificador)
+        self.inputCargo.setText(lista[0][0])
 
     def _crearConsulta(self) -> str:
         '''
         Crea una consulta SQL dependiendo del objeto
         '''
-        nombre, siglas, logo = self._obtenerCampos()
-        consulta = f"UPDATE partidos \
-            SET nombre = '{nombre}', siglas = '{siglas}', logo = '{logo}' \
-            WHERE id_partido = {self.identificador}"
+        cargo = self._obtenerCampos()
+        consulta = f"UPDATE cargos \
+            SET cargo = '{cargo}' \
+            WHERE id_cargo = {self.identificador}"
 
         return PrepararInputs.quitarEspaciosCentrales(consulta)
     # fin _crearConsulta
 
     @staticmethod
-    def obtenerPartido(identificador: int):
+    def obtenerCargo(identificador: int):
         try:
-            conexion = conMysql.connect(**VentanaInsertarPartido._configuracion)
+            conexion = conMysql.connect(**VentanaInsertarCargo._configuracion)
             cursor = conexion.cursor()
-            consulta = f"SELECT nombre, siglas, logo \
-                FROM partidos \
-                WHERE id_partido = {identificador}"
+            consulta = f"SELECT cargo \
+                FROM cargos \
+                WHERE id_cargo = {identificador}"
             cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
             lista = cursor.fetchall()
             cursor.close()
@@ -66,18 +62,17 @@ class VentanaEditarPartido(VentanaInsertarPartido):
             raise Exception
         # fin try conectar
     # fin obtenerPartido
-
-# fin VentanaEditarPartido
+# fin VentanaEditarCargo
 
 
 if __name__ == "__main__":
     try:
         app = QtWidgets.QApplication([])
-        ui = VentanaEditarPartido(1)
+        ui = VentanaEditarCargo(1)
         ui.show()
         app.exec_()
         try:
-            lista = VentanaEditarPartido.obtenerPartido(2)
+            lista = VentanaEditarCargo.obtenerCargo(1)
             print(lista)
             print(lista[0][0])
         except:
@@ -86,4 +81,4 @@ if __name__ == "__main__":
     except:
         pass
 # fin if test
-# fin editarPartido
+# fin ventanaEditarCargo

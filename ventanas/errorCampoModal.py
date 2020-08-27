@@ -1,10 +1,10 @@
 # inicio errorCampoModal.py
 
-import errorCampo_ui as uiVec
 from PyQt5 import QtCore, QtGui, QtWidgets
+from errorCampo_ui import Ui_errorCampo
 
 
-class ErrorCampoModal(QtWidgets.QDialog, uiVec.Ui_errorCampo):
+class ErrorCampoModal(QtWidgets.QDialog, Ui_errorCampo):
     def __init__(self, titulo="Error en un Campo"):
         '''
         Crea una ventana modal con un título dado
@@ -26,6 +26,7 @@ if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication([])
     ventana = ErrorCampoModal("Hola")
+    ventana.mostrar("Prueba")
     ventana.show()
     sys.exit(app.exec_())
 # fin if test

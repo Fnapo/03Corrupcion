@@ -1,20 +1,20 @@
 # inicio verPartido
 
-from editarPartido import VentanaEditarPartido as VEP
+from editarPartido import VentanaEditarPartido
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class VentanaVerPartido(VEP):
+class VentanaVerPartido(VentanaEditarPartido):
     '''
     Ventana para ver un Partido
     '''
 
     def __init__(self, identificador: int):
         try:
-            VEP.__init__(self, identificador)
+            VentanaEditarPartido.__init__(self, identificador)
         except:
             raise Exception
         else:
-            self.setWindowTitle("Ver un partido")
+            self.setWindowTitle("Ver un Partido")
             self.botonAdd.setText("Aceptar")
             self.botonRes.setEnabled(False)
             self.inputNombre.setReadOnly(True)
@@ -32,7 +32,7 @@ if __name__ == "__main__":
         app = QtWidgets.QApplication(sys.argv)
         ui = VentanaVerPartido(1)
         ui.show()
-        app.exec_()
+        sys.exit(app.exec_())
     except:
         pass
 # fin if test
