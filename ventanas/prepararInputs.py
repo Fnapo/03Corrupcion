@@ -6,6 +6,20 @@ class PrepararInputs(object):
     '''
     
     @staticmethod
+    def prepararComoMoneda(cadena: str):
+        '''
+        Prepara una cadena como un número con 2 decimales
+        '''
+        try:
+            valor = float(cadena)
+        except:
+            raise FloatingPointError
+        else:
+            return f"{valor:.2f}"
+        # fin try float
+    # fin prepararMoneda
+            
+    @staticmethod
     def separarValorCampo(mensaje: str):
         '''
         Dado un mensaje de error tipo valor duplicado separa dicho valor y el campo donde se ha realizado dicha duplicación y los retorna

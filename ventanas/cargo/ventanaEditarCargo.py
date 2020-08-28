@@ -62,6 +62,24 @@ class VentanaEditarCargo(VentanaInsertarCargo):
             raise Exception
         # fin try conectar
     # fin obtenerPartido
+
+    @staticmethod
+    def obtenerTodosCargos():
+        try:
+            conexion = conMysql.connect(**VentanaInsertarCargo._configuracion)
+            cursor = conexion.cursor()
+            consulta = f"SELECT cargo \
+                FROM cargos"
+            cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
+            lista = cursor.fetchall()
+            cursor.close()
+            conexion.close()
+
+            return lista
+        except:
+            raise Exception
+        # fin try conectar
+    # fin obtenerTodosPartidos
 # fin VentanaEditarCargo
 
 

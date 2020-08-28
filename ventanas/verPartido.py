@@ -36,4 +36,5 @@ if __name__ == "__main__":
     except:
         pass
 # fin if test
+
 # fin verPartido

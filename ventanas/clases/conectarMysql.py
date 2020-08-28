@@ -138,6 +138,6 @@ class ConectarMysql(object):
 
 
 if __name__ == "__main__":
-    conexion = ConectarMysql.conectar()
+    conexion = ConectarMysql._conectar()
 
 # fin conMysql.py
