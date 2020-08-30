@@ -1,7 +1,7 @@
 # inicio ventanaVerCargo
 
 from cargo.ventanaEditarCargo import VentanaEditarCargo
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets
 
 class VentanaVerCargo(VentanaEditarCargo):
     '''

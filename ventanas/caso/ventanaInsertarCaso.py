@@ -1,6 +1,6 @@
 # inicio ventanaInsertarCaso
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets
 from caso.insertarCaso import Ui_VentanaCaso
 from clases.conectarMysql import ConectarMysql
 from prepararInputs import PrepararInputs
@@ -33,7 +33,6 @@ class VentanaInsertarCaso(QtWidgets.QDialog, Ui_VentanaCaso, ConectarMysql):
         consulta = f"INSERT INTO casos \
             (credencial, montante) \
             VALUES ('{credencial}', '{montante}')"
-
         return PrepararInputs.quitarEspaciosCentrales(consulta)
     # fin _crearConsulta
 
@@ -63,11 +62,11 @@ class VentanaInsertarCaso(QtWidgets.QDialog, Ui_VentanaCaso, ConectarMysql):
             else:
                 if montante < valorMinimo:
                     errorCM.mostrar(
-                        f"Montante muy pequeño: {montante:,.2f}\nMínimo {valorMinimo:,.2f} €")
+                        f"Montante muy pequeño: {montante:,.2f} €\nMínimo {valorMinimo:,.2f} €")
                     return False
-
                 return True
-        # fin try float
+            # fin try float
+        # fin if len
     # fin _validarCampos
 
     def _prepararCampos(self):
@@ -82,9 +81,6 @@ class VentanaInsertarCaso(QtWidgets.QDialog, Ui_VentanaCaso, ConectarMysql):
                 PrepararInputs.prepararComoMoneda(montante))
         except:
             pass
-            # errorCm = ErrorCampoModal()
-            # errorCm.mostrar("El campo 'Montante' debe ser un decimal")
-            # self.inputMontante.setText("0.00")
         # fin try
     # fin _prepararCampos
 
@@ -109,6 +105,7 @@ if __name__ == "__main__":
     else:
         ui.show()
         sys.exit(app.exec_())
+    # fin try
 # fin if test
 
 # fin ventanaInsertarCaso

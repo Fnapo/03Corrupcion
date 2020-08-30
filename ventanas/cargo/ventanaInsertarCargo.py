@@ -1,6 +1,6 @@
 # inicio ventanaInsertarCargo
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets
 from prepararInputs import PrepararInputs
 from clases.conectarMysql import ConectarMysql
 from errorCampoModal import ErrorCampoModal

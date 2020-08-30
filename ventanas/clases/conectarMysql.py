@@ -1,16 +1,14 @@
 # inicio conMysql.py
 
 import mysql.connector as conMysql
-from mysql.connector import Error, errorcode
+from mysql.connector import errorcode
 from errorCampoModal import ErrorCampoModal
 from prepararInputs import PrepararInputs
-
-# inicio class ConectarMysql
 
 
 class ConectarMysql(object):
     '''
-    Crea una conexión con una BBDD tipo Mysql y trabaja con dicha BBDD
+    Crea una conexión, no propia o general, con una BBDD tipo Mysql y trabaja con dicha BBDD
     '''
 
     # atributos static
@@ -24,11 +22,11 @@ class ConectarMysql(object):
     def __init__(self):
         super().__init__()
         try:
-            self._conectar()
+            conexion = self.conectar()
         except:
             raise Exception
         else:
-            self._conexion.close()
+            conexion.close()
     # fin __init__
 
     def _accion(self):
@@ -36,10 +34,10 @@ class ConectarMysql(object):
         errorNumero = 0
         if self._validarCampos():
             try:
-                self._conexion.reconnect()
+                conexion = self.conectar()
                 consulta = self._crearConsulta()
                 try:
-                    self._ejecutar(consulta)
+                    self.ejecutar(conexion, consulta)
                 except Exception as error:
                     errorCM = ErrorCampoModal()
                     errorNumero = error.errno
@@ -54,8 +52,8 @@ class ConectarMysql(object):
                 else:
                     self.correcto()
                 finally:
-                    if self._conexion.is_connected():
-                        self._conexion.close()
+                    if conexion.is_connected():
+                        conexion.close()
                 # fin try ejecutar
             except Exception:
                 raise Exception
@@ -70,19 +68,19 @@ class ConectarMysql(object):
         ventanaError = ErrorCampoModal("Error de registro")
         ventanaError.mostrar(f"El registro con 'id' = {id} no existe")
     # fin errorNoRegistro
-    
+
     @staticmethod
     def errorConexion():
         errorCM = ErrorCampoModal("Error en la conexión")
         errorCM.mostrar(
-            f"Error en la conexión: Revisa los parámetros de la misma.")
+            "Error en la conexión: Revisa los parámetros de la misma.")
     # fin errorConexion
 
     def _obtenerCampos(self):
         '''
         Obtiene los valores de los campos Inputs
         '''
-        pass
+        raise NotImplementedError
     # fin _obtenerCampos
 
     @staticmethod
@@ -95,49 +93,53 @@ class ConectarMysql(object):
         '''
         Crea una consulta SQL dependiendo del objeto
         '''
-        pass
+        raise NotImplementedError
     # fin _crearConsulta
 
     def _prepararCampos(self):
         '''
         Prepara el formato de los campos Inputs
         '''
-        pass
+        raise NotImplementedError
     # fin _prepararCampos
 
     def _validarCampos(self) -> bool:
         '''
         Devuelve True si los campos son válidos
         '''
-        pass
+        raise NotImplementedError
     # fin _validarCampos
 
-    def _conectar(self):
+    @staticmethod
+    def conectar():
         '''
         Crea una conexión a una BBDD tipo MySQL
         '''
         try:
-            self._conexion = conMysql.connect(**self._configuracion)
+            conexion = conMysql.connect(**ConectarMysql._configuracion)
         except Exception as error:
-            self.errorConexion()
+            ConectarMysql.errorConexion()
             raise Exception
         else:
-            pass
+            return conexion
     # fin _conectar
 
-    def _ejecutar(self, consulta: str):
+    @staticmethod
+    def ejecutar(conexion, consulta: str):
         '''
         Ejecuta una consulta tipo CRUD (SIUD)
         '''
-        cursor = self._conexion.cursor()
+        cursor = conexion.cursor()
         cursor.execute(consulta)
-        self._conexion.commit()
+        conexion.commit()
         cursor.close()
     # fin ejecutar
 # fin class ConectarMysql
 
 
 if __name__ == "__main__":
-    conexion = ConectarMysql._conectar()
+    conexion = ConectarMysql.conectar()
+    conexion.close()
+# fin if test
 
 # fin conMysql.py

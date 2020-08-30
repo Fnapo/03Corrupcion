@@ -1,7 +1,8 @@
 # inicio verPartido
 
-from editarPartido import VentanaEditarPartido
-from PyQt5 import QtCore, QtGui, QtWidgets
+from partido.editarPartido import VentanaEditarPartido
+from PyQt5 import QtGui, QtWidgets
+
 
 class VentanaVerPartido(VentanaEditarPartido):
     '''
@@ -25,6 +26,7 @@ class VentanaVerPartido(VentanaEditarPartido):
     def _accion(self):
         self.close()
 # fin VentanaVerPartido
+
 
 if __name__ == "__main__":
     import sys

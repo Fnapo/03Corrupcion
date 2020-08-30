@@ -1,7 +1,7 @@
 # inicio editarPartido
 
-from insertarPartido import VentanaInsertarPartido
-from PyQt5 import QtCore, QtGui, QtWidgets
+from partido.insertarPartido import VentanaInsertarPartido
+from PyQt5 import QtGui, QtWidgets
 from prepararInputs import PrepararInputs
 from errorCampoModal import ErrorCampoModal
 import mysql.connector as conMysql
@@ -75,7 +75,7 @@ class VentanaEditarPartido(VentanaInsertarPartido):
             conexion = conMysql.connect(
                 **VentanaInsertarPartido._configuracion)
             cursor = conexion.cursor()
-            consulta = f"SELECT nombre, siglas, logo \
+            consulta = "SELECT id_partido, nombre, siglas, logo \
                 FROM partidos"
             cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
             lista = cursor.fetchall()

@@ -1,7 +1,7 @@
 # inicio ventanaEditarCargo
 
 from cargo.ventanaInsertarCargo import VentanaInsertarCargo
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets
 from errorCampoModal import ErrorCampoModal
 from prepararInputs import PrepararInputs
 import mysql.connector as conMysql

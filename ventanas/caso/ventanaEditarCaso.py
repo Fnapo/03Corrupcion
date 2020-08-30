@@ -74,7 +74,7 @@ class VentanaEditarCaso(VentanaInsertarCaso):
             conexion = conMysql.connect(
                 **ConectarMysql._configuracion)
             cursor = conexion.cursor()
-            consulta = f"SELECT credencial, montante \
+            consulta = "SELECT id_caso, credencial, montante \
                 FROM casos"
             cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
             lista = cursor.fetchall()

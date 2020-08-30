@@ -15,7 +15,7 @@ class PrepararInputs(object):
         except:
             raise FloatingPointError
         else:
-            return f"{valor:.2f}"
+            return f"{valor:,.2f}"
         # fin try float
     # fin prepararMoneda
             

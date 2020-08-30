@@ -1,10 +1,10 @@
 # inicio insertarPartido
 
-from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5 import QtWidgets, QtGui
 from prepararInputs import PrepararInputs
 from clases.conectarMysql import ConectarMysql
 from errorCampoModal import ErrorCampoModal
-from introducirPartido_ui import Ui_introducirPartido
+from partido.introducirPartido_ui import Ui_introducirPartido
 
 
 class VentanaInsertarPartido(QtWidgets.QDialog, Ui_introducirPartido, ConectarMysql):
