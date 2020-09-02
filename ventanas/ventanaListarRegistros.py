@@ -1,39 +1,35 @@
 # inicio ventanaListarRegistros
 
-from ventanaLista import Ui_ventanaLista
+from ventanas.ventanaLista import Ui_ventanaLista
 from PyQt5 import QtWidgets
-from clases.conectarMysql import ConectarMysql
-from errorCampoModal import ErrorCampoModal
-from padreVentanaLista import PadreVentanaLista
+from ventanas.clases.conectarMysql import ConectarMysql
+from ventanas.errorCampoModal import ErrorCampoModal
+from ventanas.padreVentanaLista import PadreVentanaLista
 
 
-class VentanaListarRegistros(QtWidgets.QDialog, Ui_ventanaLista):
+class VentanaListarRegistros(QtWidgets.QDialog, Ui_ventanaLista, ConectarMysql):
     '''
-    Ventana que lista unos registros para elegir uno de ellos
+    Ventana abstracta que lista unos registros para elegir uno de ellos
     '''
 
     def __init__(self, padre: PadreVentanaLista):
         super(VentanaListarRegistros, self).__init__()
+        ConectarMysql.__init__(self)
         self.padre = padre
         self.setupUi(self)
-        try:
-            conexion = ConectarMysql.conectar()
-        except:
-            raise Exception
+        self._conexion.reconnect()
+        listaOrdenada = self._obtenerListaOrdenada()
+        self._conexion.close()
+        if len(listaOrdenada) > 0:
+            for cadena in listaOrdenada:
+                self.comboLista.addItem(cadena)
+            self.botonAceptar.clicked.connect(self._registroSeleccionado)
+            self.botonCancelar.clicked.connect(self.close)
         else:
-            conexion.close()
-            listaOrdenada = self._obtenerListaOrdenada()
-            if len(listaOrdenada) > 0:
-                for cadena in listaOrdenada:
-                    self.comboLista.addItem(cadena)
-                self.botonAceptar.clicked.connect(self._registroSeleccionado)
-                self.botonCancelar.clicked.connect(self.close)
-            else:
-                vacia = ErrorCampoModal("Sin registros")
-                vacia.mostrar("Tabla sin registros")
-                raise Exception
-            # fin if
-        # fin try
+            vacia = ErrorCampoModal("Sin registros")
+            vacia.mostrar("Tabla sin registros")
+            raise Exception
+        # fin if
     # fin __init__
 
     def _registroSeleccionado(self):
@@ -90,5 +86,6 @@ class VentanaListarRegistros(QtWidgets.QDialog, Ui_ventanaLista):
 
         return listaOrdenada
     # fin obtenerListaOrdenada
+# fin VentanaListarRegistros    
 
 # fin ventanaListarRegistros

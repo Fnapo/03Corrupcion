@@ -1,7 +1,9 @@
 # inicio ventanaVerCargo
 
-from cargo.ventanaEditarCargo import VentanaEditarCargo
+from ventanas.cargo.ventanaEditarCargo import VentanaEditarCargo
 from PyQt5 import QtWidgets
+from ventanas.errorCampoModal import ErrorCampoModal
+
 
 class VentanaVerCargo(VentanaEditarCargo):
     '''
@@ -9,20 +11,17 @@ class VentanaVerCargo(VentanaEditarCargo):
     '''
 
     def __init__(self, identificador: int):
-        try:
-            VentanaEditarCargo.__init__(self, identificador)
-        except:
-            raise Exception
-        else:
-            self.setWindowTitle("Ver un Cargo")
-            self.botonAceptar.setText("Aceptar")
-            self.botonResetear.setEnabled(False)
-            self.inputCargo.setReadOnly(True)
+        VentanaEditarCargo.__init__(self, identificador)
+        self.setWindowTitle("Ver un Cargo")
+        self.botonAceptar.setText("Aceptar")
+        self.botonResetear.setEnabled(False)
+        self.inputCargo.setReadOnly(True)
     # fin __init__
 
     def _accion(self):
         self.close()
 # fin VentanaVerCargo
+
 
 if __name__ == "__main__":
     import sys
@@ -30,8 +29,11 @@ if __name__ == "__main__":
         app = QtWidgets.QApplication(sys.argv)
         ui = VentanaVerCargo(1)
         ui.show()
-        sys.exit(app.exec_())
-    except:
-        pass
+        app.exec_()
+    except Exception:
+        ErrorCampoModal.errorNoRegistro(id)
+    except BaseException:
+        ErrorCampoModal.errorConexion()
 # fin if test
+
 # fin ventanaVerCargo

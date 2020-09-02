@@ -1,28 +1,23 @@
 # inicio ventanaInsertarCargo
 
 from PyQt5 import QtWidgets
-from prepararInputs import PrepararInputs
-from clases.conectarMysql import ConectarMysql
-from errorCampoModal import ErrorCampoModal
-from cargo.insertarCargo import Ui_Dialog
+from ventanas.prepararInputs import PrepararInputs
+from ventanas.accionMysql import AccionMysql
+from ventanas.errorCampoModal import ErrorCampoModal
+from ventanas.cargo.insertarCargo import Ui_Dialog
 
 
-class VentanaInsertarCargo(QtWidgets.QDialog, Ui_Dialog, ConectarMysql):
+class VentanaInsertarCargo(QtWidgets.QDialog, Ui_Dialog, AccionMysql):
     '''
     Ventana para insertar un Cargo
     '''
-    
+
     def __init__(self):
-        try:
-            QtWidgets.QDialog.__init__(self)
-            self.setupUi(self)
-            ConectarMysql.__init__(self)
-        except:
-            raise Exception
-        else:
-            self.botonAceptar.clicked.connect(self._accion)
-            self.botonResetear.clicked.connect(self._resetear)
-        # fin try
+        super(VentanaInsertarCargo, self).__init__()
+        AccionMysql.__init__(self)
+        self.setupUi(self)
+        self.botonAceptar.clicked.connect(self._accion)
+        self.botonResetear.clicked.connect(self._resetear)
     # fin __init__
 
     def _crearConsulta(self) -> str:
@@ -39,7 +34,7 @@ class VentanaInsertarCargo(QtWidgets.QDialog, Ui_Dialog, ConectarMysql):
 
     def _resetear(self):
         self.inputCargo.setText("")
-    
+
     def _validarCampos(self) -> bool:
         '''
         Devuelve True si los campos son válidos
@@ -69,7 +64,6 @@ class VentanaInsertarCargo(QtWidgets.QDialog, Ui_Dialog, ConectarMysql):
         '''
         return self.inputCargo.text()
     # fin _obtenerCampos
-
 # fin VentanaInsertarCargo
 
 
@@ -79,10 +73,9 @@ if __name__ == "__main__":
         app = QtWidgets.QApplication([])
         ventana = VentanaInsertarCargo()
         ventana.show()
-    except:
-        pass
-    else:
-        sys.exit(app.exec_())
+        app.exec_()
+    except BaseException:
+        ErrorCampoModal.errorConexion()
     # fin try
 # fin if test
 

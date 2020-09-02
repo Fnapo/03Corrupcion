@@ -1,10 +1,10 @@
 # inicio editarPartido
 
-from partido.insertarPartido import VentanaInsertarPartido
+from ventanas.partido.insertarPartido import VentanaInsertarPartido
 from PyQt5 import QtGui, QtWidgets
-from prepararInputs import PrepararInputs
-from errorCampoModal import ErrorCampoModal
-import mysql.connector as conMysql
+from ventanas.prepararInputs import PrepararInputs
+from ventanas.errorCampoModal import ErrorCampoModal
+from ventanas.partido.seleccionarPartidos import SeleccionarPartidos
 
 
 class VentanaEditarPartido(VentanaInsertarPartido):
@@ -13,23 +13,23 @@ class VentanaEditarPartido(VentanaInsertarPartido):
     '''
 
     def __init__(self, identificador: int):
-        try:
-            VentanaInsertarPartido.__init__(self)
-            self.identificador = identificador
-            self.setWindowTitle("Editar un Partido")
-            self.botonAdd.setText("Editar Partido")
-            lista = self.obtenerPartido(self.identificador)
-            if len(lista) == 0:
-                self.errorNoRegistro(self.identificador)
-                raise Exception
-            else:
-                self._resetear()
-        except:
-            raise Exception
+        super(VentanaEditarPartido, self).__init__()
+        self.identificador = identificador
+        self.setWindowTitle("Editar un Partido")
+        self.botonAdd.setText("Editar Partido")
+        self._conexion.reconnect()
+        lista = SeleccionarPartidos.obtenerPartido(self._conexion, self.identificador)
+        self._conexion.close()        
+        if len(lista) == 0:
+            raise ValueError
+        else:
+            self._resetear()
     # fin __init__
 
     def _resetear(self):
-        lista = self.obtenerPartido(self.identificador)
+        self._conexion.reconnect()
+        lista = SeleccionarPartidos.obtenerPartido(self._conexion, self.identificador)
+        self._conexion.close()
         self.inputNombre.setText(lista[0][0])
         self.inputSiglas.setText(lista[0][1])
         self.inputLogo.setText(lista[0][2])
@@ -48,63 +48,35 @@ class VentanaEditarPartido(VentanaInsertarPartido):
 
         return PrepararInputs.quitarEspaciosCentrales(consulta)
     # fin _crearConsulta
-
-    @staticmethod
-    def obtenerPartido(identificador: int):
-        try:
-            conexion = conMysql.connect(
-                **VentanaInsertarPartido._configuracion)
-            cursor = conexion.cursor()
-            consulta = f"SELECT nombre, siglas, logo \
-                FROM partidos \
-                WHERE id_partido = {identificador}"
-            cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
-            lista = cursor.fetchall()
-            cursor.close()
-            conexion.close()
-
-            return lista
-        except:
-            raise Exception
-        # fin try conectar
-    # fin obtenerPartido
-
-    @staticmethod
-    def obtenerTodosPartidos():
-        try:
-            conexion = conMysql.connect(
-                **VentanaInsertarPartido._configuracion)
-            cursor = conexion.cursor()
-            consulta = "SELECT id_partido, nombre, siglas, logo \
-                FROM partidos"
-            cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
-            lista = cursor.fetchall()
-            cursor.close()
-            conexion.close()
-
-            return lista
-        except:
-            raise Exception
-        # fin try conectar
-    # fin obtenerTodosPartidos
 # fin VentanaEditarPartido
 
 
 if __name__ == "__main__":
     try:
         app = QtWidgets.QApplication([])
-        ui = VentanaEditarPartido(1)
+        id = 1
+        ui = VentanaEditarPartido(id)
         ui.show()
         app.exec_()
         try:
-            lista = VentanaEditarPartido.obtenerPartido(2)
+            id = 1
+            conexion = VentanaEditarPartido.conectar()
+            lista = SeleccionarPartidos.obtenerPartido(conexion, id)
+            if len(lista) == 0:
+                raise ValueError
+            conexion.close()
             print(lista)
-            print(lista[0][0])
-        except:
-            ventanaError = ErrorCampoModal("Error en una Lista")
-            ventanaError.mostrar("La Lista está vacía")
-    except:
-        pass
+            print(lista[0][1])
+        except IndexError:
+            ErrorCampoModal.errorIndiceIncorrecto(type(lista))            
+        except ConnectionError:
+            ErrorCampoModal.errorConexion()
+        except ValueError:
+            ErrorCampoModal.errorNoRegistro(id)
+    except ConnectionError:
+        ErrorCampoModal.errorConexion()
+    except ValueError:
+        ErrorCampoModal.errorNoRegistro(id)
 # fin if test
 
 # fin editarPartido

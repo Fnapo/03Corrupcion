@@ -1,28 +1,24 @@
 # inicio insertarPartido
 
 from PyQt5 import QtWidgets, QtGui
-from prepararInputs import PrepararInputs
-from clases.conectarMysql import ConectarMysql
-from errorCampoModal import ErrorCampoModal
-from partido.introducirPartido_ui import Ui_introducirPartido
+from ventanas.prepararInputs import PrepararInputs
+from ventanas.accionMysql import AccionMysql
+from ventanas.errorCampoModal import ErrorCampoModal
+from ventanas.partido.introducirPartido_ui import Ui_introducirPartido
 
 
-class VentanaInsertarPartido(QtWidgets.QDialog, Ui_introducirPartido, ConectarMysql):
+class VentanaInsertarPartido(QtWidgets.QDialog, Ui_introducirPartido, AccionMysql):
     '''
     Ventana para insertar un Partido
     '''
 
     def __init__(self):
-        QtWidgets.QDialog.__init__(self)
-        try:
-            ConectarMysql.__init__(self)
-        except:
-            raise Exception
-        else:
-            self.setupUi(self)
-            self.botonLogo.clicked.connect(self._buscarLogo)
-            self.botonAdd.clicked.connect(self._accion)
-            self.botonRes.clicked.connect(self._resetear)
+        super(VentanaInsertarPartido, self).__init__()
+        AccionMysql.__init__(self)
+        self.setupUi(self)
+        self.botonLogo.clicked.connect(self._buscarLogo)
+        self.botonAdd.clicked.connect(self._accion)
+        self.botonRes.clicked.connect(self._resetear)
     # fin __init__
 
     def _crearConsulta(self) -> str:
@@ -42,19 +38,18 @@ class VentanaInsertarPartido(QtWidgets.QDialog, Ui_introducirPartido, ConectarMy
         Devuelve True si los campos son válidos
         '''
         nombre, siglas, logo = self._obtenerCampos()
-        mensaje = "Campo vacío: '{}'"
-        errorCM = ErrorCampoModal()
         if len(nombre) == 0:
-            errorCM.mostrar(mensaje.format("Nombre"))
+            ErrorCampoModal.errorCampoVacio("Nombre")
             return False
         elif len(siglas) == 0:
-            errorCM.mostrar(mensaje.format("Siglas"))
+            ErrorCampoModal.errorCampoVacio("Siglas")
             return False
         elif len(logo) == 0:
-            errorCM.mostrar(mensaje.format("Logo"))
+            ErrorCampoModal.errorCampoVacio("Logo")
             return False
-
-        return True
+        else:
+            return True
+        # fin if len
     # fin _validarCampos
 
     def _prepararCampos(self):
@@ -88,7 +83,7 @@ class VentanaInsertarPartido(QtWidgets.QDialog, Ui_introducirPartido, ConectarMy
             miQpixmax = QtGui.QPixmap(fNombre[0])
             self.labelLogo.setPixmap(miQpixmax.scaled(100, 100))
     # fin _buscarLogo
-# fin clase VentanaIntroducirPartido
+# fin VentanaIntroducirPartido
 
 
 if __name__ == "__main__":
@@ -96,11 +91,10 @@ if __name__ == "__main__":
     try:
         app = QtWidgets.QApplication(sys.argv)
         ui = VentanaInsertarPartido()
-    except:
-        pass
-    else:
         ui.show()
-        sys.exit(app.exec_())
+        app.exec_()
+    except:
+        ErrorCampoModal.errorConexion()
 # fin if test
 
 # fin insertarPartido

@@ -1,11 +1,10 @@
 # inicio ventanaEditarCaso
 
-from caso.ventanaInsertarCaso import VentanaInsertarCaso
+from ventanas.caso.ventanaInsertarCaso import VentanaInsertarCaso
 from PyQt5 import QtWidgets
-from clases.conectarMysql import ConectarMysql
-from prepararInputs import PrepararInputs
-import mysql.connector as conMysql
-from errorCampoModal import ErrorCampoModal
+from ventanas.caso.seleccionarCasos import SeleccionarCasos
+from ventanas.prepararInputs import PrepararInputs
+from ventanas.errorCampoModal import ErrorCampoModal
 
 
 class VentanaEditarCaso(VentanaInsertarCaso):
@@ -14,20 +13,18 @@ class VentanaEditarCaso(VentanaInsertarCaso):
     '''
 
     def __init__(self, identificador: int):
-        try:
-            super(VentanaEditarCaso, self).__init__()
-        except:
-            raise Exception
+        super(VentanaEditarCaso, self).__init__()
+        self.identificador = identificador
+        self.setWindowTitle("Editar un Caso")
+        self.botonAceptar.setText("Editar Caso")
+        self._conexion.reconnect()
+        lista = SeleccionarCasos.obtenerCaso(
+            self._conexion, self.identificador)
+        self._conexion.close()
+        if len(lista) == 0:
+            raise ValueError
         else:
-            self.identificador = identificador
-            self.setWindowTitle("Editar un Caso")
-            self.botonAceptar.setText("Editar Caso")
-            lista = self.obtenerCaso(self.identificador)
-            if len(lista) == 0:
-                self.errorNoRegistro(self.identificador)
-                raise Exception
-            else:
-                self._resetear()
+            self._resetear()
     # fin __init__
 
     def _crearConsulta(self) -> str:
@@ -35,75 +32,49 @@ class VentanaEditarCaso(VentanaInsertarCaso):
         Crea una consulta SQL dependiendo del objeto
         '''
         credencial, montante = self._obtenerCampos()
+        valor = PrepararInputs.pasarMonedaFloat(montante)
         consulta = f"UPDATE casos \
-            SET credencial = '{credencial}', montante = '{montante}' \
+            SET credencial = '{credencial}', montante = {valor} \
             WHERE id_caso = {self.identificador}"
 
         return PrepararInputs.quitarEspaciosCentrales(consulta)
     # fin _crearConsulta
 
     def _resetear(self):
-        lista = self.obtenerCaso(self.identificador)
+        self._conexion.reconnect()
+        lista = SeleccionarCasos.obtenerCaso(
+            self._conexion, self.identificador)
+        self._conexion.close()
         self.inputCredencial.setText(lista[0][0])
-        self.inputMontante.setText(lista[0][1])
+        self.inputMontante.setText(PrepararInputs.pasarFloatMoneda(lista[0][1], False))
     # fin _resetear
-
-    @staticmethod
-    def obtenerCaso(identificador: int):
-        try:
-            conexion = conMysql.connect(
-                **ConectarMysql._configuracion)
-            cursor = conexion.cursor()
-            consulta = f"SELECT credencial, montante \
-                FROM casos \
-                WHERE id_caso = {identificador}"
-            cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
-            lista = cursor.fetchall()
-            cursor.close()
-            conexion.close()
-
-            return lista
-        except:
-            raise Exception
-        # fin try conectar
-    # fin obtenerPartido
-
-    @staticmethod
-    def obtenerTodosCasos():
-        try:
-            conexion = conMysql.connect(
-                **ConectarMysql._configuracion)
-            cursor = conexion.cursor()
-            consulta = "SELECT id_caso, credencial, montante \
-                FROM casos"
-            cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
-            lista = cursor.fetchall()
-            cursor.close()
-            conexion.close()
-
-            return lista
-        except:
-            raise Exception
-        # fin try conectar
-    # fin obtenerTodosCasos
 # fin VentanaEditarCaso
 
 
 if __name__ == "__main__":
     try:
         app = QtWidgets.QApplication([])
-        ui = VentanaEditarCaso(1)
+        id = 1
+        ui = VentanaEditarCaso(id)
         ui.show()
         app.exec_()
         try:
-            lista = VentanaEditarCaso.obtenerCaso(2)
+            conexion = VentanaEditarCaso.conectar()
+            id = 11
+            lista = SeleccionarCasos.obtenerCaso(conexion, id)
+            if len(lista) == 0:
+                raise ValueError
+            conexion.close()
             print(lista)
-            print(lista[0][0])
-        except:
-            ventanaError = ErrorCampoModal("Error en una Lista")
-            ventanaError.mostrar("La Lista está vacía")
-    except:
-        pass
+            print(lista[0][1])
+        except IndexError:
+            ErrorCampoModal.errorIndiceIncorrecto(type(lista))
+        except ValueError:
+            ErrorCampoModal.errorNoRegistro(id)
+    except ConnectionError:
+        ErrorCampoModal.errorConexion()            
+    except ValueError:
+        ErrorCampoModal.errorNoRegistro(id)
 # fin if test
 
 # fin ventanaEditarCaso

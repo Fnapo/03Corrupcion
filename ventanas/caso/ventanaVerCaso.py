@@ -1,6 +1,7 @@
 # inicio ventanaVerCaso
 
-from caso.ventanaEditarCaso import VentanaEditarCaso
+from ventanas.caso.ventanaEditarCaso import VentanaEditarCaso
+from ventanas.errorCampoModal import ErrorCampoModal
 from PyQt5 import QtWidgets
 
 
@@ -10,16 +11,12 @@ class VentanaVerCaso(VentanaEditarCaso):
     '''
 
     def __init__(self, identificador: int):
-        try:
-            super(VentanaVerCaso, self).__init__(identificador)
-        except:
-            raise Exception
-        else:
-            self.setWindowTitle("Ver un Caso")
-            self.botonAceptar.setText("Aceptar")
-            self.botonResetear.setEnabled(False)
-            self.inputCredencial.setReadOnly(True)
-            self.inputMontante.setReadOnly(True)
+        super(VentanaVerCaso, self).__init__(identificador)
+        self.setWindowTitle("Ver un Caso")
+        self.botonAceptar.setText("Aceptar")
+        self.botonResetear.setEnabled(False)
+        self.inputCredencial.setReadOnly(True)
+        self.inputMontante.setReadOnly(True)
     # fin __init__
 
     def _accion(self):
@@ -30,12 +27,15 @@ class VentanaVerCaso(VentanaEditarCaso):
 if __name__ == "__main__":
     import sys
     try:
-        app = QtWidgets.QApplication(sys.argv)
-        ui = VentanaVerCaso(1)
+        app = QtWidgets.QApplication([])
+        id = 1
+        ui = VentanaVerCaso(id)
         ui.show()
-        sys.exit(app.exec_())
-    except:
-        pass
+        app.exec_()
+    except ConnectionError:
+        ErrorCampoModal.errorConexion()        
+    except ValueError:
+        ErrorCampoModal.errorNoRegistro(id)
 # fin if test
 
 # fin ventanaVerCaso
