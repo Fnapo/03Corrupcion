@@ -2,15 +2,15 @@
 
 from PyQt5 import QtWidgets, QtGui
 from ventanas.caso.insertarCaso import Ui_VentanaCaso
-from ventanas.accionMysql import AccionMysql
+from ventanas.ventanaAccionMysql import VentanaAccionMysql
 from ventanas.prepararInputs import PrepararInputs
 from ventanas.errorCampoModal import ErrorCampoModal
 import locale
 
 
-class VentanaInsertarCaso(QtWidgets.QDialog, Ui_VentanaCaso, AccionMysql):
+class VentanaInsertarCaso(VentanaAccionMysql, Ui_VentanaCaso):
     '''
-    Ventana para insertar un Caso
+    Ventana para insertar un Caso.
     '''
 
     # static attibutos
@@ -19,9 +19,9 @@ class VentanaInsertarCaso(QtWidgets.QDialog, Ui_VentanaCaso, AccionMysql):
 
     def __init__(self):
         super(VentanaInsertarCaso, self).__init__()
-        AccionMysql.__init__(self)
         self.setupUi(self)
         self.botonAceptar.clicked.connect(self._accion)
+        self.botonCancelar.clicked.connect(self.close)
         self.botonResetear.clicked.connect(self._resetear)
         validadorDoble = QtGui.QDoubleValidator(
             self._min, self._max, 2)
@@ -31,7 +31,7 @@ class VentanaInsertarCaso(QtWidgets.QDialog, Ui_VentanaCaso, AccionMysql):
 
     def _crearConsulta(self) -> str:
         '''
-        Crea una consulta SQL dependiendo del objeto
+        Crea una consulta SQL dependiendo del objeto.
         '''
         credencial, montante = self._obtenerCampos()
         valor = PrepararInputs.pasarMonedaFloat(montante)
@@ -44,7 +44,7 @@ class VentanaInsertarCaso(QtWidgets.QDialog, Ui_VentanaCaso, AccionMysql):
 
     def _validarCampos(self) -> bool:
         '''
-        Devuelve True si los campos son válidos
+        Devuelve True si los campos son válidos.
         '''
         credencial, montante = self._obtenerCampos()
         minimo = 4
@@ -70,7 +70,7 @@ class VentanaInsertarCaso(QtWidgets.QDialog, Ui_VentanaCaso, AccionMysql):
 
     def _prepararCampos(self):
         '''
-        Prepara el formato de los campos Inputs
+        Prepara el formato de los campos Inputs.
         '''
         credencial, montante = self._obtenerCampos()
         self.inputCredencial.setText(

@@ -1,52 +1,44 @@
 # inicio ventanaListarPartidos
 
-from ventanaListarRegistros import VentanaListarRegistros
+from ventanas.ventanaListarRegistros import VentanaListarRegistros
 from PyQt5 import QtWidgets
-from editarPartido import VentanaEditarPartido
-from padreVentanaLista import PadreVentanaLista
+from ventanas.partido.seleccionarPartidos import SeleccionarPartidos
 
 
 class VentanaListarPartidos(VentanaListarRegistros):
     '''
-    Ventana que lista los partidos para elegir uno
+    Ventana que lista los Partidos para elegir uno.
     '''
 
-    def __init__(self, padre: PadreVentanaLista):
-        try:
-            super(VentanaListarPartidos, self).__init__(padre)
-        except:
-            raise Exception
-        else:
-            self.setWindowTitle("Selecionar un Partido")
-            self.label.setText("Selecciona un Partido ...")
-        # fin try
+    def __init__(self):
+        super(VentanaListarPartidos, self).__init__()
+        self.setWindowTitle("Selecionar un Partido")
+        self.label.setText("Selecciona un Partido ...")
     # fin __init__
 
     @staticmethod
-    def _prepararItem(item: tuple) -> str:
+    def _prepararItem(item: tuple) -> tuple:
         '''
         Prepara el item para insertarlo en el QComboBox
         '''        
-        return f"{item[1]:<50} ({item[0]})"
+        return f"{item[1]:<{VentanaListarRegistros._anchura}}", item[0]
     
     @staticmethod
     def _obtenerTodosRegistros() -> list:
         '''
         Obtiene todos los registros asociados
         '''
-        return VentanaEditarPartido.obtenerTodosPartidos()
+        return SeleccionarPartidos.obtenerTodosPartidos(VentanaListarPartidos._conexion)
     # fin _obtenerTodosRegistros
-
-# fin VentanaListaPartidos
+# fin VentanaListarPartidos
 
 if __name__ == "__main__":
     import sys
     try:
         app = QtWidgets.QApplication(sys.argv)
-        padre = PadreVentanaLista()
-        ui = VentanaListarPartidos(padre)
+        ui = VentanaListarPartidos()
     except:
-        pass
+        sys.exit("Error en el programa ...")
     else:
         ui.show()
         sys.exit(app.exec_())

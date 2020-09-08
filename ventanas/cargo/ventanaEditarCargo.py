@@ -4,6 +4,7 @@ from ventanas.cargo.ventanaInsertarCargo import VentanaInsertarCargo
 from PyQt5 import QtWidgets
 from ventanas.prepararInputs import PrepararInputs
 from ventanas.cargo.seleccionarCargos import SeleccionarCargos
+from ventanas.clases.conectarMysql import ConectarMysql
 from ventanas.errorCampoModal import ErrorCampoModal
 
 
@@ -53,11 +54,11 @@ if __name__ == "__main__":
     try:
         app = QtWidgets.QApplication([])
         id = 1
-        ui = VentanaEditarCargo(id)
-        ui.show()
+        ventana = VentanaEditarCargo(id)
+        ventana.show()
         app.exec_()
         try:
-            conexion = VentanaEditarCargo.conectar()
+            conexion = ConectarMysql.conectar()
             id = 11
             lista = SeleccionarCargos.obtenerCargo(conexion, id)
             conexion.close()
@@ -65,8 +66,10 @@ if __name__ == "__main__":
                 raise ValueError
             print(lista)
             print(lista[0][0])
-        except:
+        except ValueError:
             ErrorCampoModal.errorNoRegistro(id)
+        except ConnectionError:
+            ErrorCampoModal.errorConexion()
     except ValueError:
         ErrorCampoModal.errorNoRegistro(id)
     except ConnectionError:

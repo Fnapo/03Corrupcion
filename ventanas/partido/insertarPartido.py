@@ -1,100 +1,164 @@
-# inicio insertarPartido
+# -*- coding: utf-8 -*-
 
-from PyQt5 import QtWidgets, QtGui
-from ventanas.prepararInputs import PrepararInputs
-from ventanas.accionMysql import AccionMysql
-from ventanas.errorCampoModal import ErrorCampoModal
-from ventanas.partido.introducirPartido_ui import Ui_introducirPartido
+# Form implementation generated from reading ui file 'insertarPartido.ui'
+#
+# Created by: PyQt5 UI code generator 5.9.2
+#
+# WARNING! All changes made in this file will be lost!
 
+from PyQt5 import QtCore, QtGui, QtWidgets
 
-class VentanaInsertarPartido(QtWidgets.QDialog, Ui_introducirPartido, AccionMysql):
-    '''
-    Ventana para insertar un Partido
-    '''
+class Ui_introducirPartido(object):
+    def setupUi(self, introducirPartido):
+        introducirPartido.setObjectName("introducirPartido")
+        introducirPartido.resize(520, 360)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(introducirPartido.sizePolicy().hasHeightForWidth())
+        introducirPartido.setSizePolicy(sizePolicy)
+        introducirPartido.setMinimumSize(QtCore.QSize(520, 360))
+        introducirPartido.setMaximumSize(QtCore.QSize(520, 360))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        introducirPartido.setFont(font)
+        self.gridLayout = QtWidgets.QGridLayout(introducirPartido)
+        self.gridLayout.setObjectName("gridLayout")
+        self.horizontalLayout = QtWidgets.QHBoxLayout()
+        self.horizontalLayout.setContentsMargins(9, 9, 9, 9)
+        self.horizontalLayout.setObjectName("horizontalLayout")
+        self.label = QtWidgets.QLabel(introducirPartido)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        self.label.setMinimumSize(QtCore.QSize(200, 30))
+        self.label.setMaximumSize(QtCore.QSize(200, 30))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label.setFont(font)
+        self.label.setStyleSheet("background-color: rgba(199, 199, 199, 150);")
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.horizontalLayout.addWidget(self.label)
+        self.inputNombre = QtWidgets.QLineEdit(introducirPartido)
+        self.inputNombre.setMinimumSize(QtCore.QSize(0, 30))
+        self.inputNombre.setMaximumSize(QtCore.QSize(16777215, 30))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.inputNombre.setFont(font)
+        self.inputNombre.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.inputNombre.setObjectName("inputNombre")
+        self.horizontalLayout.addWidget(self.inputNombre)
+        self.horizontalLayout.setStretch(0, 1)
+        self.gridLayout.addLayout(self.horizontalLayout, 0, 0, 1, 1)
+        self.horizontalLayout_2 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_2.setContentsMargins(9, 9, 9, 9)
+        self.horizontalLayout_2.setObjectName("horizontalLayout_2")
+        self.label_2 = QtWidgets.QLabel(introducirPartido)
+        self.label_2.setMinimumSize(QtCore.QSize(160, 0))
+        self.label_2.setMaximumSize(QtCore.QSize(160, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.label_2.setFont(font)
+        self.label_2.setStyleSheet("background-color: rgba(199, 199, 199, 150); padding: 5;")
+        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        self.label_2.setObjectName("label_2")
+        self.horizontalLayout_2.addWidget(self.label_2)
+        self.inputSiglas = QtWidgets.QLineEdit(introducirPartido)
+        self.inputSiglas.setMinimumSize(QtCore.QSize(0, 30))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.inputSiglas.setFont(font)
+        self.inputSiglas.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.inputSiglas.setStyleSheet("background-color: rgb(255, 255, 255); ")
+        self.inputSiglas.setObjectName("inputSiglas")
+        self.horizontalLayout_2.addWidget(self.inputSiglas)
+        self.gridLayout.addLayout(self.horizontalLayout_2, 1, 0, 1, 1)
+        self.horizontalLayout_3 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_3.setContentsMargins(9, 9, 9, 9)
+        self.horizontalLayout_3.setObjectName("horizontalLayout_3")
+        self.botonLogo = QtWidgets.QPushButton(introducirPartido)
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.botonLogo.setFont(font)
+        self.botonLogo.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.botonLogo.setStyleSheet("padding: 5;")
+        self.botonLogo.setObjectName("botonLogo")
+        self.horizontalLayout_3.addWidget(self.botonLogo)
+        self.inputLogo = QtWidgets.QLineEdit(introducirPartido)
+        self.inputLogo.setMinimumSize(QtCore.QSize(0, 30))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.inputLogo.setFont(font)
+        self.inputLogo.setInputMethodHints(QtCore.Qt.ImhUrlCharactersOnly)
+        self.inputLogo.setReadOnly(True)
+        self.inputLogo.setObjectName("inputLogo")
+        self.horizontalLayout_3.addWidget(self.inputLogo)
+        self.labelLogo = QtWidgets.QLabel(introducirPartido)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.labelLogo.sizePolicy().hasHeightForWidth())
+        self.labelLogo.setSizePolicy(sizePolicy)
+        self.labelLogo.setMinimumSize(QtCore.QSize(100, 100))
+        self.labelLogo.setMaximumSize(QtCore.QSize(100, 100))
+        self.labelLogo.setStyleSheet("background-color: rgb(223, 223, 223);")
+        self.labelLogo.setText("")
+        self.labelLogo.setAlignment(QtCore.Qt.AlignCenter)
+        self.labelLogo.setObjectName("labelLogo")
+        self.horizontalLayout_3.addWidget(self.labelLogo)
+        self.gridLayout.addLayout(self.horizontalLayout_3, 2, 0, 1, 1)
+        self.horizontalLayout_4 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_4.setContentsMargins(5, 5, 5, 5)
+        self.horizontalLayout_4.setSpacing(10)
+        self.horizontalLayout_4.setObjectName("horizontalLayout_4")
+        self.botonAceptar = QtWidgets.QPushButton(introducirPartido)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.botonAceptar.sizePolicy().hasHeightForWidth())
+        self.botonAceptar.setSizePolicy(sizePolicy)
+        self.botonAceptar.setMinimumSize(QtCore.QSize(210, 40))
+        self.botonAceptar.setMaximumSize(QtCore.QSize(210, 40))
+        self.botonAceptar.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.botonAceptar.setObjectName("botonAceptar")
+        self.horizontalLayout_4.addWidget(self.botonAceptar)
+        self.botonCancelar = QtWidgets.QPushButton(introducirPartido)
+        self.botonCancelar.setMinimumSize(QtCore.QSize(100, 40))
+        self.botonCancelar.setMaximumSize(QtCore.QSize(100, 40))
+        self.botonCancelar.setObjectName("botonCancelar")
+        self.horizontalLayout_4.addWidget(self.botonCancelar)
+        self.botonResetear = QtWidgets.QPushButton(introducirPartido)
+        self.botonResetear.setMinimumSize(QtCore.QSize(150, 40))
+        self.botonResetear.setMaximumSize(QtCore.QSize(150, 40))
+        self.botonResetear.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.botonResetear.setObjectName("botonResetear")
+        self.horizontalLayout_4.addWidget(self.botonResetear)
+        self.gridLayout.addLayout(self.horizontalLayout_4, 3, 0, 1, 1)
 
-    def __init__(self):
-        super(VentanaInsertarPartido, self).__init__()
-        AccionMysql.__init__(self)
-        self.setupUi(self)
-        self.botonLogo.clicked.connect(self._buscarLogo)
-        self.botonAdd.clicked.connect(self._accion)
-        self.botonRes.clicked.connect(self._resetear)
-    # fin __init__
+        self.retranslateUi(introducirPartido)
+        QtCore.QMetaObject.connectSlotsByName(introducirPartido)
 
-    def _crearConsulta(self) -> str:
-        '''
-        Crea una consulta SQL dependiendo del objeto
-        '''
-        nombre, siglas, logo = self._obtenerCampos()
-        consulta = f"INSERT INTO partidos \
-            (nombre, siglas, logo) \
-            VALUES ('{nombre}', '{siglas}', '{logo}')"
-
-        return PrepararInputs.quitarEspaciosCentrales(consulta)
-    # fin _crearConsulta
-
-    def _validarCampos(self) -> bool:
-        '''
-        Devuelve True si los campos son válidos
-        '''
-        nombre, siglas, logo = self._obtenerCampos()
-        if len(nombre) == 0:
-            ErrorCampoModal.errorCampoVacio("Nombre")
-            return False
-        elif len(siglas) == 0:
-            ErrorCampoModal.errorCampoVacio("Siglas")
-            return False
-        elif len(logo) == 0:
-            ErrorCampoModal.errorCampoVacio("Logo")
-            return False
-        else:
-            return True
-        # fin if len
-    # fin _validarCampos
-
-    def _prepararCampos(self):
-        '''
-        Prepara el formato de los campos Inputs
-        '''
-        nombre = self.inputNombre.text()
-        siglas = self.inputSiglas.text()
-        self.inputNombre.setText(PrepararInputs.prepararCadenaCap(nombre))
-        self.inputSiglas.setText(PrepararInputs.prepararCadenaMay(siglas))
-    # fin _prepararCampos
-
-    def _obtenerCampos(self):
-        return self.inputNombre.text(), self.inputSiglas.text(), \
-            self.inputLogo.text()
-    # fin _obtenerCampos
-
-    def _resetear(self):
-        self.inputNombre.setText("")
-        self.inputSiglas.setText("")
-        self.inputLogo.setText("")
-        miQpixmax = QtGui.QPixmap("")
-        self.labelLogo.setPixmap(miQpixmax)
-    # fin _resetear
-
-    def _buscarLogo(self):
-        fNombre = QtWidgets.QFileDialog.getOpenFileName(
-            self, "Buscando un Logo", ".\\imagenes", "Ficheros de imágenes (*.jpg *.gif *.jpeg)")
-        if len(fNombre[0]) > 0:
-            self.inputLogo.setText(fNombre[0])
-            miQpixmax = QtGui.QPixmap(fNombre[0])
-            self.labelLogo.setPixmap(miQpixmax.scaled(100, 100))
-    # fin _buscarLogo
-# fin VentanaIntroducirPartido
+    def retranslateUi(self, introducirPartido):
+        _translate = QtCore.QCoreApplication.translate
+        introducirPartido.setWindowTitle(_translate("introducirPartido", "Insertar un Partido"))
+        self.label.setText(_translate("introducirPartido", "Nombre del Partido"))
+        self.label_2.setText(_translate("introducirPartido", "Siglas del Partido"))
+        self.botonLogo.setText(_translate("introducirPartido", "Buscar Logo"))
+        self.inputLogo.setStyleSheet(_translate("introducirPartido", "background-color: rgb(255, 255, 255); padding: 0 5;"))
+        self.botonAceptar.setText(_translate("introducirPartido", "Insertar Partido Político"))
+        self.botonCancelar.setText(_translate("introducirPartido", "Cancelar"))
+        self.botonResetear.setText(_translate("introducirPartido", "Resetear"))
 
 
 if __name__ == "__main__":
     import sys
-    try:
-        app = QtWidgets.QApplication(sys.argv)
-        ui = VentanaInsertarPartido()
-        ui.show()
-        app.exec_()
-    except:
-        ErrorCampoModal.errorConexion()
-# fin if test
+    app = QtWidgets.QApplication(sys.argv)
+    introducirPartido = QtWidgets.QDialog()
+    ui = Ui_introducirPartido()
+    ui.setupUi(introducirPartido)
+    introducirPartido.show()
+    sys.exit(app.exec_())
 
-# fin insertarPartido

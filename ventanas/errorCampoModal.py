@@ -33,6 +33,15 @@ class ErrorCampoModal(QtWidgets.QDialog, Ui_errorCampo):
     # fin errorDesconocido
 
     @staticmethod
+    def errorSinRegistros():
+        '''
+        Error tipo tabla sin registros
+        '''        
+        vacia = ErrorCampoModal("Sin registros")
+        vacia.mostrar("Tabla sin registros")
+    # fin errorSinRegistros
+
+    @staticmethod
     def errorIndiceIncorrecto(tipo: str):
         '''
         Error en el índice de una tuple, o list, etc...

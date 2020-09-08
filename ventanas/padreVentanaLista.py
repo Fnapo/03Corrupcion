@@ -2,15 +2,15 @@
 
 class PadreVentanaLista:
     '''
-    Clase vacía y abstracta (Interface) que es el padre de una Ventana que lista unos registros
+    Clase vacía y abstracta (Interface) que es el padre de una Ventana que lista unos registros.
     '''
 
-    def _tratarRegistro(self, identificador: int):
+    def idRegistro(self, identificador: int = -1)->int:
         '''
-        Trata el registro con 'id' identificador
+        Devuelve el 'id' del registro seleccionado
         '''
-        raise NotImplementedError
-    # fin _tratarRegistro
+        return identificador
+    # fin idRegistro
 # fin PadreVentanaLista
 
 # fin padreVentanaLista

@@ -8,7 +8,8 @@ from PyQt5 import QtWidgets
 
 class ConectarMysql:
     '''
-    Clase estática para crear una conexión, propia o global, con una BBDD tipo Mysql o para ejecutar una consulta con dicha BBDD.
+    Clase estática para crear una conexión con una BBDD tipo Mysql.
+    O para ejecutar una consulta a una BBDD
     '''
 
     # atributos static
@@ -18,18 +19,6 @@ class ConectarMysql:
         'host': '127.0.0.1',
         'database': 'politica'
     }
-    _conexion: conMysql.MySQLConnection = None
-
-    def __init__(self):
-        try:
-            if self._conexion is None:
-                self._conexion = self.conectar()
-        except:
-            raise ConnectionError
-        else:
-            if self._conexion.is_connected():
-                self._conexion.close()
-    # fin __init__
 
     @staticmethod
     def conectar():

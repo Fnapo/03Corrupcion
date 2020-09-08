@@ -1,0 +1,111 @@
+# -*- coding: utf-8 -*-
+
+# Form implementation generated from reading ui file 'ventanaCRUD.ui'
+#
+# Created by: PyQt5 UI code generator 5.9.2
+#
+# WARNING! All changes made in this file will be lost!
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+
+class Ui_ventanaCrud(object):
+    def setupUi(self, ventanaCrud):
+        ventanaCrud.setObjectName("ventanaCrud")
+        ventanaCrud.resize(480, 300)
+        ventanaCrud.setMinimumSize(QtCore.QSize(480, 300))
+        ventanaCrud.setMaximumSize(QtCore.QSize(480, 300))
+        self.gridLayout = QtWidgets.QGridLayout(ventanaCrud)
+        self.gridLayout.setObjectName("gridLayout")
+        self.borrarRegistro = QtWidgets.QPushButton(ventanaCrud)
+        self.borrarRegistro.setMinimumSize(QtCore.QSize(250, 40))
+        self.borrarRegistro.setMaximumSize(QtCore.QSize(250, 40))
+        self.borrarRegistro.setSizeIncrement(QtCore.QSize(4, 4))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.borrarRegistro.setFont(font)
+        self.borrarRegistro.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.borrarRegistro.setObjectName("borrarRegistro")
+        self.gridLayout.addWidget(self.borrarRegistro, 6, 1, 1, 1)
+        spacerItem = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem, 7, 0, 1, 1)
+        spacerItem1 = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem1, 0, 0, 1, 1)
+        spacerItem2 = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem2, 6, 2, 1, 1)
+        spacerItem3 = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem3, 7, 2, 1, 1)
+        spacerItem4 = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem4, 6, 0, 1, 1)
+        spacerItem5 = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem5, 2, 2, 1, 1)
+        self.cancelar = QtWidgets.QPushButton(ventanaCrud)
+        self.cancelar.setMinimumSize(QtCore.QSize(250, 40))
+        self.cancelar.setMaximumSize(QtCore.QSize(250, 40))
+        self.cancelar.setSizeIncrement(QtCore.QSize(4, 4))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.cancelar.setFont(font)
+        self.cancelar.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.cancelar.setObjectName("cancelar")
+        self.gridLayout.addWidget(self.cancelar, 7, 1, 1, 1)
+        self.crearRegistro = QtWidgets.QPushButton(ventanaCrud)
+        self.crearRegistro.setMinimumSize(QtCore.QSize(250, 40))
+        self.crearRegistro.setMaximumSize(QtCore.QSize(250, 40))
+        self.crearRegistro.setSizeIncrement(QtCore.QSize(4, 4))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.crearRegistro.setFont(font)
+        self.crearRegistro.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.crearRegistro.setObjectName("crearRegistro")
+        self.gridLayout.addWidget(self.crearRegistro, 0, 1, 1, 1)
+        self.editarRegistro = QtWidgets.QPushButton(ventanaCrud)
+        self.editarRegistro.setMinimumSize(QtCore.QSize(250, 40))
+        self.editarRegistro.setMaximumSize(QtCore.QSize(250, 40))
+        self.editarRegistro.setSizeIncrement(QtCore.QSize(4, 4))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.editarRegistro.setFont(font)
+        self.editarRegistro.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.editarRegistro.setObjectName("editarRegistro")
+        self.gridLayout.addWidget(self.editarRegistro, 2, 1, 1, 1)
+        spacerItem6 = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem6, 0, 2, 1, 1)
+        spacerItem7 = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem7, 2, 0, 1, 1)
+        self.verRegistro = QtWidgets.QPushButton(ventanaCrud)
+        self.verRegistro.setMinimumSize(QtCore.QSize(250, 40))
+        self.verRegistro.setMaximumSize(QtCore.QSize(250, 40))
+        self.verRegistro.setSizeIncrement(QtCore.QSize(4, 4))
+        font = QtGui.QFont()
+        font.setPointSize(14)
+        self.verRegistro.setFont(font)
+        self.verRegistro.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.verRegistro.setObjectName("verRegistro")
+        self.gridLayout.addWidget(self.verRegistro, 3, 1, 1, 1)
+        spacerItem8 = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem8, 3, 0, 1, 1)
+        spacerItem9 = QtWidgets.QSpacerItem(107, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.gridLayout.addItem(spacerItem9, 3, 2, 1, 1)
+
+        self.retranslateUi(ventanaCrud)
+        QtCore.QMetaObject.connectSlotsByName(ventanaCrud)
+
+    def retranslateUi(self, ventanaCrud):
+        _translate = QtCore.QCoreApplication.translate
+        ventanaCrud.setWindowTitle(_translate("ventanaCrud", "Dialog"))
+        self.borrarRegistro.setText(_translate("ventanaCrud", "Borrar un Registro Registro"))
+        self.cancelar.setText(_translate("ventanaCrud", "Cancelar"))
+        self.crearRegistro.setText(_translate("ventanaCrud", "Crear un Registro Registro"))
+        self.editarRegistro.setText(_translate("ventanaCrud", "Editar un Registro Registro"))
+        self.verRegistro.setText(_translate("ventanaCrud", "Ver un Registro Registro"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    ventanaCrud = QtWidgets.QDialog()
+    ui = Ui_ventanaCrud()
+    ui.setupUi(ventanaCrud)
+    ventanaCrud.show()
+    sys.exit(app.exec_())
+

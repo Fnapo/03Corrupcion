@@ -14,7 +14,8 @@ class VentanaVerCargo(VentanaEditarCargo):
         VentanaEditarCargo.__init__(self, identificador)
         self.setWindowTitle("Ver un Cargo")
         self.botonAceptar.setText("Aceptar")
-        self.botonResetear.setEnabled(False)
+        self.botonCancelar.setEnabled(False)  
+        self.botonResetear.setEnabled(False)      
         self.inputCargo.setReadOnly(True)
     # fin __init__
 

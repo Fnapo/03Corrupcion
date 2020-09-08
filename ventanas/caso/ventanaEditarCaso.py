@@ -4,6 +4,7 @@ from ventanas.caso.ventanaInsertarCaso import VentanaInsertarCaso
 from PyQt5 import QtWidgets
 from ventanas.caso.seleccionarCasos import SeleccionarCasos
 from ventanas.prepararInputs import PrepararInputs
+from ventanas.clases.conectarMysql import ConectarMysql
 from ventanas.errorCampoModal import ErrorCampoModal
 
 
@@ -59,7 +60,7 @@ if __name__ == "__main__":
         ui.show()
         app.exec_()
         try:
-            conexion = VentanaEditarCaso.conectar()
+            conexion = ConectarMysql.conectar()
             id = 11
             lista = SeleccionarCasos.obtenerCaso(conexion, id)
             if len(lista) == 0:
@@ -67,8 +68,8 @@ if __name__ == "__main__":
             conexion.close()
             print(lista)
             print(lista[0][1])
-        except IndexError:
-            ErrorCampoModal.errorIndiceIncorrecto(type(lista))
+        except ConnectionError:
+            ErrorCampoModal.errorConexion()             
         except ValueError:
             ErrorCampoModal.errorNoRegistro(id)
     except ConnectionError:

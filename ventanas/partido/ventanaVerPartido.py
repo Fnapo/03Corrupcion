@@ -1,6 +1,6 @@
-# inicio verPartido
+# inicio ventanaVerPartido
 
-from ventanas.partido.editarPartido import VentanaEditarPartido
+from ventanas.partido.ventanaEditarPartido import VentanaEditarPartido
 from PyQt5 import QtGui, QtWidgets
 from ventanas.errorCampoModal import ErrorCampoModal
 
@@ -11,10 +11,11 @@ class VentanaVerPartido(VentanaEditarPartido):
     '''
 
     def __init__(self, identificador: int):
-        VentanaEditarPartido.__init__(self, identificador)
+        super(VentanaVerPartido, self).__init__(identificador)
         self.setWindowTitle("Ver un Partido")
-        self.botonAdd.setText("Aceptar")
-        self.botonRes.setEnabled(False)
+        self.botonAceptar.setText("Aceptar")
+        self.botonCancelar.setEnabled(False)  
+        self.botonResetear.setEnabled(False)   
         self.inputNombre.setReadOnly(True)
         self.inputSiglas.setReadOnly(True)
         self.botonLogo.setEnabled(False)
@@ -38,4 +39,4 @@ if __name__ == "__main__":
         ErrorCampoModal.errorNoRegistro(id)
 # fin if test
 
-# fin verPartido
+# fin ventanaVerPartido

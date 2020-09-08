@@ -1,9 +1,10 @@
-# inicio editarPartido
+# inicio ventanaEditarPartido
 
-from ventanas.partido.insertarPartido import VentanaInsertarPartido
+from ventanas.partido.ventanaInsertarPartido import VentanaInsertarPartido
 from PyQt5 import QtGui, QtWidgets
 from ventanas.prepararInputs import PrepararInputs
 from ventanas.errorCampoModal import ErrorCampoModal
+from ventanas.clases.conectarMysql import ConectarMysql
 from ventanas.partido.seleccionarPartidos import SeleccionarPartidos
 
 
@@ -16,7 +17,7 @@ class VentanaEditarPartido(VentanaInsertarPartido):
         super(VentanaEditarPartido, self).__init__()
         self.identificador = identificador
         self.setWindowTitle("Editar un Partido")
-        self.botonAdd.setText("Editar Partido")
+        self.botonAceptar.setText("Editar Partido")
         self._conexion.reconnect()
         lista = SeleccionarPartidos.obtenerPartido(self._conexion, self.identificador)
         self._conexion.close()        
@@ -60,15 +61,13 @@ if __name__ == "__main__":
         app.exec_()
         try:
             id = 1
-            conexion = VentanaEditarPartido.conectar()
+            conexion = ConectarMysql.conectar()
             lista = SeleccionarPartidos.obtenerPartido(conexion, id)
             if len(lista) == 0:
                 raise ValueError
             conexion.close()
             print(lista)
-            print(lista[0][1])
-        except IndexError:
-            ErrorCampoModal.errorIndiceIncorrecto(type(lista))            
+            print(lista[0][1])         
         except ConnectionError:
             ErrorCampoModal.errorConexion()
         except ValueError:
@@ -79,4 +78,4 @@ if __name__ == "__main__":
         ErrorCampoModal.errorNoRegistro(id)
 # fin if test
 
-# fin editarPartido
+# fin ventanaEditarPartido

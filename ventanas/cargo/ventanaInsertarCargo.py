@@ -2,27 +2,27 @@
 
 from PyQt5 import QtWidgets
 from ventanas.prepararInputs import PrepararInputs
-from ventanas.accionMysql import AccionMysql
+from ventanas.ventanaAccionMysql import VentanaAccionMysql
 from ventanas.errorCampoModal import ErrorCampoModal
-from ventanas.cargo.insertarCargo import Ui_Dialog
+from ventanas.cargo.insertarCargo import Ui_insertarCargo
 
 
-class VentanaInsertarCargo(QtWidgets.QDialog, Ui_Dialog, AccionMysql):
+class VentanaInsertarCargo(VentanaAccionMysql, Ui_insertarCargo):
     '''
-    Ventana para insertar un Cargo
+    Ventana para insertar un Cargo.
     '''
 
     def __init__(self):
         super(VentanaInsertarCargo, self).__init__()
-        AccionMysql.__init__(self)
         self.setupUi(self)
         self.botonAceptar.clicked.connect(self._accion)
+        self.botonCancelar.clicked.connect(self.close)
         self.botonResetear.clicked.connect(self._resetear)
     # fin __init__
 
     def _crearConsulta(self) -> str:
         '''
-        Crea una consulta SQL dependiendo del objeto
+        Crea una consulta SQL dependiendo del objeto.
         '''
         cargo = self._obtenerCampos()
         consulta = f"INSERT INTO cargos \
@@ -37,14 +37,13 @@ class VentanaInsertarCargo(QtWidgets.QDialog, Ui_Dialog, AccionMysql):
 
     def _validarCampos(self) -> bool:
         '''
-        Devuelve True si los campos son válidos
+        Devuelve True si los campos son válidos.
         '''
         cargo = self._obtenerCampos()
         minimo = 4
         mensaje = "Campo vacío o muy corto: '{}'.\nMínimo {} Caracteres."
-        errorCM = ErrorCampoModal()
         if len(cargo) < minimo:
-            errorCM.mostrar(mensaje.format("Cargo", minimo))
+            errorCM = ErrorCampoModal.errorCampoCorto("Cargo", minimo)
             return False
 
         return True
@@ -52,7 +51,7 @@ class VentanaInsertarCargo(QtWidgets.QDialog, Ui_Dialog, AccionMysql):
 
     def _prepararCampos(self):
         '''
-        Prepara el formato de los campos Inputs
+        Prepara el formato de los campos Inputs.
         '''
         cargo = self._obtenerCampos()
         self.inputCargo.setText(PrepararInputs.prepararCadenaCap(cargo))
@@ -60,7 +59,7 @@ class VentanaInsertarCargo(QtWidgets.QDialog, Ui_Dialog, AccionMysql):
 
     def _obtenerCampos(self):
         '''
-        Obtiene los valores de los campos Inputs
+        Obtiene los valores de los campos Inputs.
         '''
         return self.inputCargo.text()
     # fin _obtenerCampos

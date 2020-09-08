@@ -14,7 +14,8 @@ class VentanaVerCaso(VentanaEditarCaso):
         super(VentanaVerCaso, self).__init__(identificador)
         self.setWindowTitle("Ver un Caso")
         self.botonAceptar.setText("Aceptar")
-        self.botonResetear.setEnabled(False)
+        self.botonCancelar.setEnabled(False)  
+        self.botonResetear.setEnabled(False) 
         self.inputCredencial.setReadOnly(True)
         self.inputMontante.setReadOnly(True)
     # fin __init__
