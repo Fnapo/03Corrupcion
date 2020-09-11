@@ -16,7 +16,8 @@ class VentanaBorrarCaso(VentanaEditarCaso):
         self.setWindowTitle("Borrar un Caso")
         self.botonAceptar.setText("Borrar")
         self.botonResetear.setEnabled(False)
-        self.inputCredencial.setReadOnly(True)        
+        self.inputCredencial.setEnabled(False)
+        self.inputMontante.setEnabled(False)
     # fin __init__
 
     def _crearConsulta(self) -> str:

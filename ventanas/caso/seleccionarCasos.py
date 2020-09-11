@@ -15,7 +15,7 @@ class SeleccionarCasos:
         Dada una conexion tipo Mysql, selecciona y retorna, si existe, el Caso con 'id' identificador
         '''
         cursor = conexion.cursor()
-        consulta = f"SELECT credencial, montante \
+        consulta = f"SELECT * \
             FROM casos \
             WHERE id_caso = {identificador}"            
         cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
@@ -32,7 +32,7 @@ class SeleccionarCasos:
         Dada una conexion tipo Mysql, selecciona y retorna todos los Casos
         '''
         cursor = conexion.cursor()
-        consulta = f"SELECT id_caso, credencial, montante \
+        consulta = f"SELECT * \
             FROM casos"
         cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
         lista = cursor.fetchall()

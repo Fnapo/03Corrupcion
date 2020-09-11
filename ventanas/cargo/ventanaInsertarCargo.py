@@ -73,7 +73,7 @@ if __name__ == "__main__":
         ventana = VentanaInsertarCargo()
         ventana.show()
         app.exec_()
-    except BaseException:
+    except ConnectionError:
         ErrorCampoModal.errorConexion()
     # fin try
 # fin if test

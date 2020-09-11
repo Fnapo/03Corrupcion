@@ -33,6 +33,15 @@ class ErrorCampoModal(QtWidgets.QDialog, Ui_errorCampo):
     # fin errorDesconocido
 
     @staticmethod
+    def errorFaltaCampo(campo: str):
+        '''
+        Error tipo Campo sin seleccionar
+        '''        
+        vacia = ErrorCampoModal(f"Falta seleccionar {campo}")
+        vacia.mostrar(f"Debes seleccionar ...\n{campo}")
+    # fin errorFaltaCampo
+
+    @staticmethod
     def errorSinRegistros():
         '''
         Error tipo tabla sin registros

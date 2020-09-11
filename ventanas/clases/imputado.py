@@ -1,13 +1,7 @@
 # python 3
-# Inicio imputado.cy
+# Inicio imputado
 
-from datetime import *
-from random import *
-
-partidos = [0 for i in range(7)] + [1 for i in range(7)] + \
-    [2 for i in range(3)] + [3 for i in range(3)] + [4]
-partido = randint(0, len(partidos) - 1)
-partido = partidos[partido]
+from datetime import date
 
 
 class Imputado(object):
@@ -20,7 +14,6 @@ class Imputado(object):
         self.grupo_sangre = grupo_sangre
         self.cargo = cargo
         self.partido = partido
-
     # fin __init__
 
-# fin imputado.cy
+# fin imputado

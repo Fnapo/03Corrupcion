@@ -15,7 +15,7 @@ class SeleccionarCargos:
         Dada una conexion tipo Mysql, selecciona y retorna, si existe, el Cargo con 'id' identificador
         '''
         cursor = conexion.cursor()
-        consulta = f"SELECT cargo \
+        consulta = f"SELECT * \
             FROM cargos \
             WHERE id_cargo = {identificador}"            
         cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
@@ -32,7 +32,7 @@ class SeleccionarCargos:
         Dada una conexion tipo Mysql, selecciona y retorna todos los Cargos
         '''
         cursor = conexion.cursor()
-        consulta = f"SELECT id_cargo, cargo \
+        consulta = f"SELECT * \
             FROM cargos"
         cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
         lista = cursor.fetchall()

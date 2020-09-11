@@ -11,12 +11,12 @@ class VentanaVerCargo(VentanaEditarCargo):
     '''
 
     def __init__(self, identificador: int):
-        VentanaEditarCargo.__init__(self, identificador)
+        super(VentanaVerCargo, self).__init__(identificador)
         self.setWindowTitle("Ver un Cargo")
         self.botonAceptar.setText("Aceptar")
         self.botonCancelar.setEnabled(False)  
         self.botonResetear.setEnabled(False)      
-        self.inputCargo.setReadOnly(True)
+        self.inputCargo.setEnabled(False)
     # fin __init__
 
     def _accion(self):
@@ -28,12 +28,12 @@ if __name__ == "__main__":
     import sys
     try:
         app = QtWidgets.QApplication(sys.argv)
-        ui = VentanaVerCargo(1)
-        ui.show()
+        ventana = VentanaVerCargo(1)
+        ventana.show()
         app.exec_()
-    except Exception:
+    except ValueError:
         ErrorCampoModal.errorNoRegistro(id)
-    except BaseException:
+    except ConnectionError:
         ErrorCampoModal.errorConexion()
 # fin if test
 

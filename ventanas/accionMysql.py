@@ -29,7 +29,7 @@ class AccionMysql(ConexionMysql):
                     # entrada duplicada
                     ErrorCampoModal.errorDuplicado(error.msg)
                 else:
-                    ErrorCampoModal.errorDesconocido()
+                    ErrorCampoModal.errorDesconocido(error.msg)
                 # fin if entrada duplicada
             else:
                 ErrorCampoModal.correcto()

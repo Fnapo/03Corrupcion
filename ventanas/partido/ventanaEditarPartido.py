@@ -31,10 +31,10 @@ class VentanaEditarPartido(VentanaInsertarPartido):
         self._conexion.reconnect()
         lista = SeleccionarPartidos.obtenerPartido(self._conexion, self.identificador)
         self._conexion.close()
-        self.inputNombre.setText(lista[0][0])
-        self.inputSiglas.setText(lista[0][1])
-        self.inputLogo.setText(lista[0][2])
-        miQpixmax = QtGui.QPixmap(lista[0][2])
+        self.inputNombre.setText(lista[0][1])
+        self.inputSiglas.setText(lista[0][2])
+        self.inputLogo.setText(lista[0][3])
+        miQpixmax = QtGui.QPixmap(lista[0][3])
         self.labelLogo.setPixmap(miQpixmax.scaled(100, 100))
     # fin _resetear
 

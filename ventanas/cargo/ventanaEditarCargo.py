@@ -33,7 +33,7 @@ class VentanaEditarCargo(VentanaInsertarCargo):
         lista = SeleccionarCargos.obtenerCargo(
             self._conexion, self.identificador)
         self._conexion.close()
-        self.inputCargo.setText(lista[0][0])
+        self.inputCargo.setText(lista[0][1])
     # fin _resetear
 
     def _crearConsulta(self) -> str:

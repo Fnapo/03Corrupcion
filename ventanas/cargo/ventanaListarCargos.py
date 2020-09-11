@@ -17,11 +17,20 @@ class VentanaListarCargos(VentanaListarRegistros):
     # fin __init__
 
     @staticmethod
+    def prepararCargo(cargo: tuple) -> tuple:
+        '''
+        Prepara el Cargo para insertarlo en el QComboBox.
+        '''        
+        return f"{cargo[1]:<{VentanaListarRegistros._anchura}}", cargo[0]
+    # fin prepararCargo
+
+    @staticmethod
     def _prepararItem(item: tuple) -> tuple:
         '''
         Prepara el item para insertarlo en el QComboBox.
         '''        
-        return f"{item[1]:<{VentanaListarRegistros._anchura}}", item[0]
+        return VentanaListarCargos.prepararCargo(item)
+    # fin _prepararItem
     
     @staticmethod
     def _obtenerTodosRegistros() -> list:
@@ -36,12 +45,12 @@ if __name__ == "__main__":
     import sys
     try:
         app = QtWidgets.QApplication(sys.argv)
-        ui = VentanaListarCargos()
+        ventana = VentanaListarCargos()
     except:
         sys.exit("Error en el programa ...")
     else:
-        ui.exec_()
-        salida = ui.verIDRegistro()
+        ventana.exec_()
+        salida = ventana.verIDRegistro()
         print(salida)
     # fin try
 # fin if test

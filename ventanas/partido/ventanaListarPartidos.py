@@ -17,11 +17,20 @@ class VentanaListarPartidos(VentanaListarRegistros):
     # fin __init__
 
     @staticmethod
+    def prepararPartido(partido: tuple) -> tuple:
+        '''
+        Prepara el Partido para insertarlo en el QComboBox
+        '''        
+        return f"{partido[1]:<{VentanaListarRegistros._anchura}}", partido[0]
+    # fin prepararPartido
+
+    @staticmethod
     def _prepararItem(item: tuple) -> tuple:
         '''
         Prepara el item para insertarlo en el QComboBox
         '''        
-        return f"{item[1]:<{VentanaListarRegistros._anchura}}", item[0]
+        return VentanaListarPartidos.prepararPartido(item)
+    # fin _prepararItem
     
     @staticmethod
     def _obtenerTodosRegistros() -> list:

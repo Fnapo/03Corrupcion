@@ -16,7 +16,7 @@ class SeleccionarPartidos:
         Dada una conexion tipo Mysql, selecciona y retorna, si existe, el Partido con 'id' identificador
         '''
         cursor = conexion.cursor()
-        consulta = f"SELECT nombre, siglas, logo \
+        consulta = f"SELECT * \
             FROM partidos \
             WHERE id_partido = {identificador}"
         cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
@@ -33,7 +33,7 @@ class SeleccionarPartidos:
         Dada una conexion tipo Mysql, selecciona y retorna todos los Partidos
         '''
         cursor = conexion.cursor()
-        consulta = "SELECT id_partido, nombre, siglas, logo \
+        consulta = "SELECT * \
             FROM partidos"
         cursor.execute(PrepararInputs.quitarEspaciosCentrales(consulta))
         lista = cursor.fetchall()

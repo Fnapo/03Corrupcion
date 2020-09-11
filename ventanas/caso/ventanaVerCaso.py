@@ -15,9 +15,9 @@ class VentanaVerCaso(VentanaEditarCaso):
         self.setWindowTitle("Ver un Caso")
         self.botonAceptar.setText("Aceptar")
         self.botonCancelar.setEnabled(False)  
-        self.botonResetear.setEnabled(False) 
-        self.inputCredencial.setReadOnly(True)
-        self.inputMontante.setReadOnly(True)
+        self.botonResetear.setEnabled(False)
+        self.inputCredencial.setEnabled(False)
+        self.inputMontante.setEnabled(False)
     # fin __init__
 
     def _accion(self):

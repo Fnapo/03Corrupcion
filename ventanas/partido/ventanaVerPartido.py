@@ -16,8 +16,9 @@ class VentanaVerPartido(VentanaEditarPartido):
         self.botonAceptar.setText("Aceptar")
         self.botonCancelar.setEnabled(False)  
         self.botonResetear.setEnabled(False)   
-        self.inputNombre.setReadOnly(True)
-        self.inputSiglas.setReadOnly(True)
+        self.inputNombre.setEnabled(False)
+        self.inputSiglas.setEnabled(False)
+        self.inputLogo.setEnabled(False)
         self.botonLogo.setEnabled(False)
     # fin __init__
 

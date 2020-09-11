@@ -16,7 +16,7 @@ class VentanaBorrarCargo(VentanaEditarCargo):
         self.setWindowTitle("Borrar un Cargo")
         self.botonAceptar.setText("Borrar")
         self.botonResetear.setEnabled(False)
-        self.inputCargo.setReadOnly(True)        
+        self.inputCargo.setEnabled(False)        
     # fin __init__
 
     def _crearConsulta(self) -> str:
@@ -36,12 +36,12 @@ if __name__ == "__main__":
     try:
         app = QtWidgets.QApplication(sys.argv)
         id = 1
-        ui = VentanaBorrarCargo(id)
-        ui.show()
+        ventana = VentanaBorrarCargo(id)
+        ventana.show()
         app.exec_()
-    except Exception:
+    except ValueError:
         ErrorCampoModal.errorNoRegistro(id)
-    except BaseException:
+    except ConnectionError:
         ErrorCampoModal.errorConexion()
 # fin if test
 

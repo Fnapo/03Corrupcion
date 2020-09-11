@@ -46,8 +46,8 @@ class VentanaEditarCaso(VentanaInsertarCaso):
         lista = SeleccionarCasos.obtenerCaso(
             self._conexion, self.identificador)
         self._conexion.close()
-        self.inputCredencial.setText(lista[0][0])
-        self.inputMontante.setText(PrepararInputs.pasarFloatMoneda(lista[0][1], False))
+        self.inputCredencial.setText(lista[0][1])
+        self.inputMontante.setText(PrepararInputs.pasarFloatMoneda(lista[0][2], False))
     # fin _resetear
 # fin VentanaEditarCaso
 

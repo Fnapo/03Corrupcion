@@ -17,11 +17,20 @@ class VentanaListarCasos(VentanaListarRegistros):
     # fin __init__
 
     @staticmethod
+    def prepararCaso(caso: tuple) -> tuple:
+        '''
+        Prepara el Caso para insertarlo en el QComboBox.
+        '''        
+        return f"{caso[1]:<{VentanaListarRegistros._anchura}}", caso[0]
+    # fin prepararCaso
+
+    @staticmethod
     def _prepararItem(item: tuple) -> tuple:
         '''
         Prepara el item para insertarlo en el QComboBox.
         '''        
-        return f"{item[1]:<{VentanaListarRegistros._anchura}}", item[0]
+        return VentanaListarCasos.prepararCaso(item)
+    # fin _prepararItem
     
     @staticmethod
     def _obtenerTodosRegistros() -> list:

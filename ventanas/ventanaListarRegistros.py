@@ -82,7 +82,7 @@ class VentanaListarRegistros(QtWidgets.QDialog, Ui_ventanaLista, ConexionMysql):
 
     def _llenarListaOrdenada(self):
         '''
-        Llena una lista ordenada con todos los registros
+        Llena una lista y la ordenada con todos los registros.
         '''
         lista = self._obtenerTodosRegistros()
         while len(lista) > 0:

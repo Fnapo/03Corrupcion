@@ -16,8 +16,9 @@ class VentanaBorrarPartido(VentanaEditarPartido):
         self.setWindowTitle("Borrar un Partido")
         self.botonAceptar.setText("Borrar")
         self.botonResetear.setEnabled(False)
-        self.inputNombre.setReadOnly(True)
-        self.inputSiglas.setReadOnly(True)
+        self.inputNombre.setEnabled(False)
+        self.inputSiglas.setEnabled(False)
+        self.inputLogo.setEnabled(False)
         self.botonLogo.setEnabled(False)
     # fin __init__
 
