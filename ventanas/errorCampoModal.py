@@ -42,12 +42,12 @@ class ErrorCampoModal(QtWidgets.QDialog, Ui_errorCampo):
     # fin errorFaltaCampo
 
     @staticmethod
-    def errorSinRegistros():
+    def errorSinRegistros(campos: str):
         '''
         Error tipo tabla sin registros
         '''        
-        vacia = ErrorCampoModal("Sin registros")
-        vacia.mostrar("Tabla sin registros")
+        vacia = ErrorCampoModal(f"Sin {campos}")
+        vacia.mostrar(f"Tabla sin {campos}")
     # fin errorSinRegistros
 
     @staticmethod
