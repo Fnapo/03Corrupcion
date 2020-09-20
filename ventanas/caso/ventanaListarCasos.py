@@ -11,9 +11,15 @@ class VentanaListarCasos(VentanaListarRegistros):
     '''
 
     def __init__(self):
-        super(VentanaListarCasos, self).__init__()
-        self.setWindowTitle("Selecionar un Caso")
-        self.label.setText("Selecciona un Caso ...")
+        try:
+            super(VentanaListarCasos, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Selecionar un Caso")
+            self.label.setText("Selecciona un Caso ...")
     # fin __init__
 
     @staticmethod

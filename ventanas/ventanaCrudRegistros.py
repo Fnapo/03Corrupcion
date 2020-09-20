@@ -2,23 +2,27 @@
 
 from PyQt5 import QtWidgets
 from ventanas.ventanaCRUD import Ui_ventanaCrud
-from ventanas.conexionMysql import ConexionMysql
+from ventanas.ventanaConexionMysql import VentanaConexionMysql
 
 
-class VentanaCrudRegistros(QtWidgets.QDialog, Ui_ventanaCrud, ConexionMysql):
+class VentanaCrudRegistros(VentanaConexionMysql, Ui_ventanaCrud):
     '''
-    Ventana abstracta para elegir la acción CRUD
+    Ventana abstracta para elegir la acción CRUD.
     '''
 
     def __init__(self):
-        super(VentanaCrudRegistros, self).__init__()
-        self.setupUi(self)
-        ConexionMysql.__init__(self)
-        self.crearRegistro.clicked.connect(self._crear)
-        self.verRegistro.clicked.connect(self._ver)
-        self.editarRegistro.clicked.connect(self._editar)
-        self.borrarRegistro.clicked.connect(self._borrar)
-        self.cancelar.clicked.connect(self.close)          
+        try:
+            super(VentanaCrudRegistros, self).__init__()
+        except:
+            raise ConnectionError
+        else:
+            self.setupUi(self)
+            self.crearRegistro.clicked.connect(self._crear)
+            self.verRegistro.clicked.connect(self._ver)
+            self.editarRegistro.clicked.connect(self._editar)
+            self.borrarRegistro.clicked.connect(self._borrar)
+            self.cancelar.clicked.connect(self.close)
+        # fin try
     # fin __init__
 
     def _borrar(self):

@@ -11,11 +11,16 @@ class VentanaCrudImputado(VentanaCrudRegistros):
     '''
 
     def __init__(self):
-        super(VentanaCrudImputado, self).__init__()
-        self.crearRegistro.setText("Insertar un Imputado")
-        self.editarRegistro.setText("Editar un Imputado")
-        self.verRegistro.setText("Ver un Imputado")
-        self.borrarRegistro.setText("Borrar un Imputado")
+        try:
+            super(VentanaCrudImputado, self).__init__()
+        except:
+            raise ConnectionError
+        else:
+            self.crearRegistro.setText("Insertar un Imputado")
+            self.editarRegistro.setText("Editar un Imputado")
+            self.verRegistro.setText("Ver un Imputado")
+            self.borrarRegistro.setText("Borrar un Imputado")
+        # fin try
     # fin __init__
 
     def _borrar(self):

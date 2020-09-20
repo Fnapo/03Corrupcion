@@ -12,9 +12,15 @@ class VentanaBorrarCasoImputados(VentanaInsertarCasoImputados):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaBorrarCasoImputados, self).__init__(identificador)
-        self.botonAceptar.setText("Borrar Relación")
-        self.setWindowTitle("Borrar relación Caso Imputados")
+        try:
+            super(VentanaBorrarCasoImputados, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.botonAceptar.setText("Borrar Relación")
+            self.setWindowTitle("Borrar relación Caso Imputados")
     # fin __init__
 
     def _crearConsulta(self, fila: int) -> str:
@@ -84,8 +90,6 @@ if __name__ == "__main__":
         ErrorCampoModal.errorNoRegistro(id)
     except ConnectionError:
         ErrorCampoModal.errorConexion()
-    except IndexError:
-        ErrorCampoModal.errorSinRegistros("Imputados adecuados")
 # fin if test
 
 # fin ventanaBorrarCasoImputados

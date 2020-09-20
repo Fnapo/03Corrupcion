@@ -23,8 +23,6 @@ class VentanaInsertarCampoRegistros(VentanaConexionMysql, Ui_insertarRelacion):
                 self._prepararTabla()
             except ValueError:
                 raise ValueError
-            except IndexError:
-                raise IndexError
             else:
                 self.botonAceptar.clicked.connect(self._realizarAccion)
                 self.botonCancelar.clicked.connect(self.close)
@@ -38,7 +36,8 @@ class VentanaInsertarCampoRegistros(VentanaConexionMysql, Ui_insertarRelacion):
         Reinicia todos los CkeckBoxs.
         '''
         for fila in range(len(self._registros)):
-            self._crearCheckBox(fila)
+            elementoCheckbox =self._crearCheckBox(fila)
+            self.tablaRegistros.setCellWidget(fila, 0, elementoCheckbox)
     # fin _resetear
 
     def _crearConsulta(self, fila: int) -> str:

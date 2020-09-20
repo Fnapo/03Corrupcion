@@ -12,12 +12,19 @@ class VentanaBorrarCaso(VentanaEditarCaso):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaBorrarCaso, self).__init__(identificador)
-        self.setWindowTitle("Borrar un Caso")
-        self.botonAceptar.setText("Borrar")
-        self.botonResetear.setEnabled(False)
-        self.inputCredencial.setEnabled(False)
-        self.inputMontante.setEnabled(False)
+        try:
+            super(VentanaBorrarCaso, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Borrar un Caso")
+            self.botonAceptar.setText("Borrar")
+            self.botonResetear.setEnabled(False)
+            self.inputCredencial.setReadOnly(True)
+            self.inputMontante.setReadOnly(True)
+        # fin try
     # fin __init__
 
     def _crearConsulta(self) -> str:

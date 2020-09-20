@@ -1,10 +1,10 @@
 # python 3
-# Inicio imputado
+# inicio imputado
 
 from datetime import date
 
 
-class Imputado(object):
+class Imputado:
     def __init__(
             self, nombre: str, apellidos: str, fecha_nacimiento: date, grupo_sangre: str, partido: int, cargo=1, identificador=1):
         self.identificador = identificador
@@ -15,5 +15,6 @@ class Imputado(object):
         self.cargo = cargo
         self.partido = partido
     # fin __init__
+# fin Imputado
 
 # fin imputado

@@ -12,7 +12,7 @@ class SeleccionarCargos:
     @staticmethod
     def obtenerCargo(conexion: conMysql.MySQLConnection, identificador: int) -> list:
         '''
-        Dada una conexion tipo Mysql, selecciona y retorna, si existe, el Cargo con 'id' identificador
+        Dada una conexion activa tipo Mysql, selecciona y retorna, si existe, el Cargo con 'id' identificador
         '''
         cursor = conexion.cursor()
         consulta = f"SELECT * \
@@ -29,7 +29,7 @@ class SeleccionarCargos:
     @staticmethod
     def obtenerTodosCargos(conexion: conMysql.MySQLConnection) -> list:
         '''
-        Dada una conexion tipo Mysql, selecciona y retorna todos los Cargos
+        Dada una conexion activa tipo Mysql, selecciona y retorna todos los Cargos
         '''
         cursor = conexion.cursor()
         consulta = f"SELECT * \

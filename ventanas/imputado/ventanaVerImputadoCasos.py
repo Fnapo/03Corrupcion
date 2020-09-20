@@ -15,11 +15,18 @@ class VentanaVerImputadoCasos(VentanaInsertarImputadoCasos):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaVerImputadoCasos, self).__init__(identificador)
-        self.setWindowTitle("Mirar relación Imputado Casos")
-        self.botonAceptar.setText("Aceptar")
-        self.botonCancelar.setEnabled(False)
-        self.botonResetear.setEnabled(False)
+        try:
+            super(VentanaVerImputadoCasos, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Mirar relación Imputado Casos")
+            self.botonAceptar.setText("Aceptar")
+            self.botonCancelar.setEnabled(False)
+            self.botonResetear.setEnabled(False)
+        # fin try
     # fin __init__
 
     def _realizarAccion(self):

@@ -13,11 +13,16 @@ class VentanaInsertarCargo(VentanaAccionMysql, Ui_insertarCargo):
     '''
 
     def __init__(self):
-        super(VentanaInsertarCargo, self).__init__()
-        self.setupUi(self)
-        self.botonAceptar.clicked.connect(self._accion)
-        self.botonCancelar.clicked.connect(self.close)
-        self.botonResetear.clicked.connect(self._resetear)
+        try:
+            super(VentanaInsertarCargo, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
+        else:
+            self.setupUi(self)
+            self.botonAceptar.clicked.connect(self._accion)
+            self.botonCancelar.clicked.connect(self.close)
+            self.botonResetear.clicked.connect(self._resetear)
+        # fin try
     # fin __init__
 
     def _crearConsulta(self) -> str:

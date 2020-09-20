@@ -11,9 +11,15 @@ class VentanaListarPartidos(VentanaListarRegistros):
     '''
 
     def __init__(self):
-        super(VentanaListarPartidos, self).__init__()
-        self.setWindowTitle("Selecionar un Partido")
-        self.label.setText("Selecciona un Partido ...")
+        try:
+            super(VentanaListarPartidos, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Selecionar un Partido")
+            self.label.setText("Selecciona un Partido ...")
     # fin __init__
 
     @staticmethod

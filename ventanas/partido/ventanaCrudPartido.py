@@ -3,6 +3,9 @@
 from PyQt5 import QtWidgets
 from ventanas.ventanaCrudRegistros import VentanaCrudRegistros
 from ventanas.partido.ventanaListarPartidos import VentanaListarPartidos
+from ventanas.partido.ventanaBorrarPartido import VentanaBorrarPartido
+from ventanas.partido.ventanaVerPartido import VentanaVerPartido
+from ventanas.partido.ventanaEditarPartido import VentanaEditarPartido, VentanaInsertarPartido
 
 
 class VentanaCrudPartido(VentanaCrudRegistros):
@@ -11,11 +14,16 @@ class VentanaCrudPartido(VentanaCrudRegistros):
     '''
 
     def __init__(self):
-        super(VentanaCrudPartido, self).__init__()
-        self.crearRegistro.setText("Insertar un Partido")
-        self.editarRegistro.setText("Editar un Partido")
-        self.verRegistro.setText("Ver un Partido")
-        self.borrarRegistro.setText("Borrar un Partido")
+        try:
+            super(VentanaCrudPartido, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
+        else:
+            self.crearRegistro.setText("Insertar un Partido")
+            self.editarRegistro.setText("Editar un Partido")
+            self.verRegistro.setText("Ver un Partido")
+            self.borrarRegistro.setText("Borrar un Partido")
+        # fin try
     # fin __init__
 
     def _borrar(self):
@@ -23,9 +31,13 @@ class VentanaCrudPartido(VentanaCrudRegistros):
         Función para borrar un Partido.
         '''
         ventana = VentanaListarPartidos()
+        cadena = ventana.label.text()
+        cadena = cadena.replace("...", "para borrarlo")
         ventana.exec_()
         identificador = ventana.verIDRegistro()
-        print(identificador)
+        if identificador > 0:
+            ventanaBorrar = VentanaBorrarPartido(identificador)
+            ventanaBorrar.exec_()
         self.close()
     # fin _borrar
 
@@ -34,9 +46,13 @@ class VentanaCrudPartido(VentanaCrudRegistros):
         Función para ver un Partido.
         '''
         ventana = VentanaListarPartidos()
+        cadena = ventana.label.text()
+        cadena = cadena.replace("...", "para verlo")
         ventana.exec_()
         identificador = ventana.verIDRegistro()
-        print(identificador)
+        if identificador > 0:
+            ventanaVer = VentanaVerPartido(identificador)
+            ventanaVer.exec_()
         self.close()
     # fin _ver
 
@@ -45,9 +61,14 @@ class VentanaCrudPartido(VentanaCrudRegistros):
         Función para editar un Partido.
         '''
         ventana = VentanaListarPartidos()
+        cadena = ventana.label.text()
+        cadena = cadena.replace("...", "para editarlo")
+        ventana.label.setText(cadena)
         ventana.exec_()
         identificador = ventana.verIDRegistro()
-        print(identificador)
+        if identificador > 0:
+            ventanaEditar = VentanaEditarPartido(identificador)
+            ventanaEditar.exec_()
         self.close()
     # fin _editar
 
@@ -55,10 +76,8 @@ class VentanaCrudPartido(VentanaCrudRegistros):
         '''
         Función para crear un Partido.
         '''
-        ventana = VentanaListarPartidos()
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        print(identificador)
+        ventanaInsertar = VentanaInsertarPartido()
+        ventanaInsertar.exec_()
         self.close()
     # fin _crear
 # fin VentanaCrudPartido

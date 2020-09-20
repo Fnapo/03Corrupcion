@@ -10,7 +10,10 @@ class VentanaAccionMysql(QtWidgets.QDialog, AccionMysql):
     '''
 
     def __init__(self):
-        super(VentanaAccionMysql, self).__init__()
+        try:
+            super(VentanaAccionMysql, self).__init__()
+        except:
+            raise ConnectionError
     # fin __init__
 # fin VentanaAccionMysql
 

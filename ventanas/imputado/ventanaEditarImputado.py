@@ -14,18 +14,23 @@ class VentanaEditarImputado(VentanaInsertarImputado):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaEditarImputado, self).__init__()
-        self.identificador = identificador
-        self.setWindowTitle("Editar un Imputado")
-        self.botonAceptar.setText("Editar Imputado")
-        self._conexion.reconnect()
-        lista = SeleccionarImputados.obtenerImputado(
-            self._conexion, self.identificador)
-        self._conexion.close()
-        if len(lista) == 0:
-            raise ValueError
+        try:
+            super(VentanaEditarImputado, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
         else:
-            self._resetear()
+            self.identificador = identificador
+            self.setWindowTitle("Editar un Imputado")
+            self.botonAceptar.setText("Editar Imputado")
+            self._conexion.reconnect()
+            lista = SeleccionarImputados.obtenerImputado(
+                self._conexion, self.identificador)
+            self._conexion.close()
+            if len(lista) == 0:
+                raise ValueError
+            else:
+                self._resetear()
+        # fin try
     # fin __init__
 
     def _resetear(self):

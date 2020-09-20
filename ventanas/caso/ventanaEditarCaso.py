@@ -14,18 +14,23 @@ class VentanaEditarCaso(VentanaInsertarCaso):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaEditarCaso, self).__init__()
-        self.identificador = identificador
-        self.setWindowTitle("Editar un Caso")
-        self.botonAceptar.setText("Editar Caso")
-        self._conexion.reconnect()
-        lista = SeleccionarCasos.obtenerCaso(
-            self._conexion, self.identificador)
-        self._conexion.close()
-        if len(lista) == 0:
-            raise ValueError
+        try:
+            super(VentanaEditarCaso, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
         else:
-            self._resetear()
+            self.identificador = identificador
+            self.setWindowTitle("Editar un Caso")
+            self.botonAceptar.setText("Editar Caso")
+            self._conexion.reconnect()
+            lista = SeleccionarCasos.obtenerCaso(
+                self._conexion, self.identificador)
+            self._conexion.close()
+            if len(lista) == 0:
+                raise ValueError
+            else:
+                self._resetear()
+        # fin try
     # fin __init__
 
     def _crearConsulta(self) -> str:

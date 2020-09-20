@@ -15,11 +15,18 @@ class VentanaVerCasoImputados(VentanaInsertarCasoImputados):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaVerCasoImputados, self).__init__(identificador)
-        self.setWindowTitle("Mirar relación Caso Imputados")
-        self.botonAceptar.setText("Aceptar")
-        self.botonCancelar.setEnabled(False)
-        self.botonResetear.setEnabled(False)
+        try:
+            super(VentanaVerCasoImputados, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Mirar relación Caso Imputados")
+            self.botonAceptar.setText("Aceptar")
+            self.botonCancelar.setEnabled(False)
+            self.botonResetear.setEnabled(False)
+        # fin try
     # fin __init__
 
     def _realizarAccion(self):
@@ -79,8 +86,7 @@ if __name__ == "__main__":
         app = QtWidgets.QApplication(sys.argv)
         id = 1
         ventana = VentanaVerCasoImputados(id)
-        ventana.show()
-        app.exec_()
+        ventana.exec_()
         try:
             conexion = ConectarMysql.conectar()
             id = 11
@@ -98,8 +104,6 @@ if __name__ == "__main__":
         ErrorCampoModal.errorNoRegistro(id)
     except ConnectionError:
         ErrorCampoModal.errorConexion()
-    except IndexError:
-        ErrorCampoModal.errorSinRegistros("Imputados adecuados")
 # fin if test
 
 # fin ventanaVerCasoImputados

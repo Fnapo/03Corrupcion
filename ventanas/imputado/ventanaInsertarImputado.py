@@ -21,27 +21,32 @@ class VentanaInsertarImputado(VentanaAccionMysql, Ui_insertarImputado):
     _listaRH = ['A+', 'A-', 'AB+', 'AB-', 'B+', 'B-', 'O+', 'O-']
 
     def __init__(self):
-        super(VentanaInsertarImputado, self).__init__()
-        self.setupUi(self)
-        self.botonAceptar.clicked.connect(self._accion)
-        self.botonCancelar.clicked.connect(self.close)
-        self.botonResetear.clicked.connect(self._resetear)
-        self._listaPartidos = []
-        self._listaCargos = []
-        self._llenarPartidos()
-        for item in self._listaPartidos:
-            self.inputPartido.addItem(item[0])
-        self._llenarCargos()
-        for item in self._listaCargos:
-            self.inputCargo.addItem(item[0])
-        for item in VentanaInsertarImputado._listaRH:
-            self.inputGrupoRH.addItem(item)
-        hoy = date.today()
-        fechaMin = hoy - timedelta(days=100*365)
-        fechaMax = hoy - timedelta(days=18*365)
-        self.inputFecha.setDateRange(fechaMin, fechaMax)
-        self.inputFecha.setDate(hoy-timedelta(days=20*365))
-        self.inputFecha.setCalendarPopup(True)
+        try:
+            super(VentanaInsertarImputado, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
+        else:
+            self.setupUi(self)
+            self.botonAceptar.clicked.connect(self._accion)
+            self.botonCancelar.clicked.connect(self.close)
+            self.botonResetear.clicked.connect(self._resetear)
+            self._listaPartidos = []
+            self._listaCargos = []
+            self._llenarPartidos()
+            for item in self._listaPartidos:
+                self.inputPartido.addItem(item[0])
+            self._llenarCargos()
+            for item in self._listaCargos:
+                self.inputCargo.addItem(item[0])
+            for item in VentanaInsertarImputado._listaRH:
+                self.inputGrupoRH.addItem(item)
+            hoy = date.today()
+            fechaMin = hoy - timedelta(days=100*365)
+            fechaMax = hoy - timedelta(days=18*365)
+            self.inputFecha.setDateRange(fechaMin, fechaMax)
+            self.inputFecha.setDate(hoy-timedelta(days=20*365))
+            self.inputFecha.setCalendarPopup(True)
+        # fin try
     # fin __init__
 
     def _llenarCargos(self):

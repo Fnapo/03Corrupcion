@@ -13,12 +13,17 @@ class VentanaInsertarPartido(VentanaAccionMysql, Ui_introducirPartido):
     '''
 
     def __init__(self):
-        super(VentanaInsertarPartido, self).__init__()
-        self.setupUi(self)
-        self.botonLogo.clicked.connect(self._buscarLogo)
-        self.botonAceptar.clicked.connect(self._accion)
-        self.botonCancelar.clicked.connect(self.close)
-        self.botonResetear.clicked.connect(self._resetear)
+        try:
+            super(VentanaInsertarPartido, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
+        else:
+            self.setupUi(self)
+            self.botonLogo.clicked.connect(self._buscarLogo)
+            self.botonAceptar.clicked.connect(self._accion)
+            self.botonCancelar.clicked.connect(self.close)
+            self.botonResetear.clicked.connect(self._resetear)
+        # fin try
     # fin __init__
 
     def _crearConsulta(self) -> str:

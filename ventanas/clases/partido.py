@@ -7,5 +7,7 @@ class Partido(object):
         self.nombre = nombre
         self.siglas = siglas
         self.logo = logo
-
+    # fin __init__
 # fin Partido
+
+# fin partido

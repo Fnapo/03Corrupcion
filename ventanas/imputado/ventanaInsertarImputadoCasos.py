@@ -15,8 +15,14 @@ class VentanaInsertarImputadoCasos(VentanaInsertarCampoRegistros):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaInsertarImputadoCasos, self).__init__(identificador)
-        self.setWindowTitle("Insertar relación Imputado Casos")
+        try:
+            super(VentanaInsertarImputadoCasos, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Insertar relación Imputado Casos")
     # fin __init__
 
     def _crearConsulta(self, fila: int) -> str:

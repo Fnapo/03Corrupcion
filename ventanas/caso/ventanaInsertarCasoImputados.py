@@ -12,12 +12,18 @@ from ventanas.caso.ventanaListarCasos import VentanaListarCasos
 
 class VentanaInsertarCasoImputados(VentanaInsertarCampoRegistros):
     '''
-    Relaciona unos Imputadps con un Caso dado.
+    Relaciona unos Imputados con un Caso dado.
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaInsertarCasoImputados, self).__init__(identificador)
-        self.setWindowTitle("Insertar relación Caso Impurtados")
+        try:
+            super(VentanaInsertarCasoImputados, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Insertar relación Caso Impurtados")
     # fin __init__
 
     def _crearConsulta(self, fila: int) -> str:
@@ -87,7 +93,7 @@ class VentanaInsertarCasoImputados(VentanaInsertarCampoRegistros):
         '''
         Prepara el Caso como una cadena.
         '''
-        return campo[0][1].strip()
+        return f"Caso: {campo[0][1].strip()}"
     # fin _prepararCampo
 
     def _obtenerCampo(self) -> list:
@@ -126,8 +132,6 @@ if __name__ == "__main__":
         ErrorCampoModal.errorNoRegistro(id)
     except ConnectionError:
         ErrorCampoModal.errorConexion()
-    except IndexError:
-        ErrorCampoModal.errorSinRegistros("Imputados adecuados")
 # fin if test
 
 # fin ventanaInsertarCasoImputados

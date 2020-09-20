@@ -14,17 +14,22 @@ class VentanaEditarPartido(VentanaInsertarPartido):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaEditarPartido, self).__init__()
-        self.identificador = identificador
-        self.setWindowTitle("Editar un Partido")
-        self.botonAceptar.setText("Editar Partido")
-        self._conexion.reconnect()
-        lista = SeleccionarPartidos.obtenerPartido(self._conexion, self.identificador)
-        self._conexion.close()        
-        if len(lista) == 0:
-            raise ValueError
+        try:
+            super(VentanaEditarPartido, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
         else:
-            self._resetear()
+            self.identificador = identificador
+            self.setWindowTitle("Editar un Partido")
+            self.botonAceptar.setText("Editar Partido")
+            self._conexion.reconnect()
+            lista = SeleccionarPartidos.obtenerPartido(self._conexion, self.identificador)
+            self._conexion.close()        
+            if len(lista) == 0:
+                raise ValueError
+            else:
+                self._resetear()
+        # fin try
     # fin __init__
 
     def _resetear(self):

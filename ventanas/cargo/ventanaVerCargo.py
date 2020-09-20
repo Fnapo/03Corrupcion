@@ -11,12 +11,19 @@ class VentanaVerCargo(VentanaEditarCargo):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaVerCargo, self).__init__(identificador)
-        self.setWindowTitle("Ver un Cargo")
-        self.botonAceptar.setText("Aceptar")
-        self.botonCancelar.setEnabled(False)  
-        self.botonResetear.setEnabled(False)      
-        self.inputCargo.setEnabled(False)
+        try:
+            super(VentanaVerCargo, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Ver un Cargo")
+            self.botonAceptar.setText("Aceptar")
+            self.botonCancelar.setEnabled(False)  
+            self.botonResetear.setEnabled(False)      
+            self.inputCargo.setReadOnly(True)
+        # fin try
     # fin __init__
 
     def _accion(self):

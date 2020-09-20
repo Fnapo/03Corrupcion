@@ -12,14 +12,21 @@ class VentanaBorrarPartido(VentanaEditarPartido):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaBorrarPartido, self).__init__(identificador)
-        self.setWindowTitle("Borrar un Partido")
-        self.botonAceptar.setText("Borrar")
-        self.botonResetear.setEnabled(False)
-        self.inputNombre.setEnabled(False)
-        self.inputSiglas.setEnabled(False)
-        self.inputLogo.setEnabled(False)
-        self.botonLogo.setEnabled(False)
+        try:
+            super(VentanaBorrarPartido, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Borrar un Partido")
+            self.botonAceptar.setText("Borrar")
+            self.botonResetear.setEnabled(False)
+            self.inputNombre.setReadOnly(True)
+            self.inputSiglas.setReadOnly(True)
+            self.inputLogo.setReadOnly(True)
+            self.botonLogo.setEnabled(False)
+        # fin try
     # fin __init__
 
     def _crearConsulta(self) -> str:

@@ -13,17 +13,24 @@ class VentanaVerImputado(VentanaEditarImputado):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaVerImputado, self).__init__(identificador)
-        self.setWindowTitle("Ver un Imputado")
-        self.botonAceptar.setText("Aceptar")
-        self.botonCancelar.setEnabled(False)
-        self.botonResetear.setEnabled(False)
-        self.inputNombre.setEnabled(False)
-        self.inputApellidos.setEnabled(False)
-        self.inputPartido.setEnabled(False)
-        self.inputCargo.setEnabled(False)
-        self.inputGrupoRH.setEnabled(False)
-        self.inputFecha.setEnabled(False)
+        try:
+            super(VentanaVerImputado, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Ver un Imputado")
+            self.botonAceptar.setText("Aceptar")
+            self.botonCancelar.setEnabled(False)
+            self.botonResetear.setEnabled(False)
+            self.inputNombre.setReadOnly(True)
+            self.inputApellidos.setReadOnly(True)
+            self.inputPartido.setEnabled(False)
+            self.inputCargo.setEnabled(False)
+            self.inputGrupoRH.setEnabled(False)
+            self.inputFecha.setReadOnly(True)
+        # fin try
     # fin __init__
 
     def _accion(self):

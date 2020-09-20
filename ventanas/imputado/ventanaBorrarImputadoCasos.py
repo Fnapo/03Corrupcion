@@ -12,9 +12,15 @@ class VentanaBorrarImputadoCasos(VentanaInsertarImputadoCasos):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaBorrarImputadoCasos, self).__init__(identificador)
-        self.botonAceptar.setText("Borrar Relación")
-        self.setWindowTitle("Borrar relación Imputado Casos")
+        try:
+            super(VentanaBorrarImputadoCasos, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.botonAceptar.setText("Borrar Relación")
+            self.setWindowTitle("Borrar relación Imputado Casos")
     # fin __init__
 
     def _crearConsulta(self, fila: int) -> str:

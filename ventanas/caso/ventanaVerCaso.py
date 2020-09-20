@@ -11,13 +11,20 @@ class VentanaVerCaso(VentanaEditarCaso):
     '''
 
     def __init__(self, identificador: int):
-        super(VentanaVerCaso, self).__init__(identificador)
-        self.setWindowTitle("Ver un Caso")
-        self.botonAceptar.setText("Aceptar")
-        self.botonCancelar.setEnabled(False)  
-        self.botonResetear.setEnabled(False)
-        self.inputCredencial.setEnabled(False)
-        self.inputMontante.setEnabled(False)
+        try:
+            super(VentanaVerCaso, self).__init__(identificador)
+        except ConnectionError:
+            raise ConnectionError
+        except ValueError:
+            raise ValueError
+        else:
+            self.setWindowTitle("Ver un Caso")
+            self.botonAceptar.setText("Aceptar")
+            self.botonCancelar.setEnabled(False)  
+            self.botonResetear.setEnabled(False)
+            self.inputCredencial.setReadOnly(True)
+            self.inputMontante.setReadOnly(True)
+        # fin try
     # fin __init__
 
     def _accion(self):

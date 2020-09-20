@@ -12,11 +12,16 @@ class VentanaCrudCaso(VentanaCrudRegistros):
     '''
 
     def __init__(self):
-        super(VentanaCrudCaso, self).__init__()
-        self.crearRegistro.setText("Insertar un Caso")
-        self.editarRegistro.setText("Editar un Caso")
-        self.verRegistro.setText("Ver un Caso")
-        self.borrarRegistro.setText("Borrar un Caso")
+        try:
+            super(VentanaCrudCaso, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
+        else:
+            self.crearRegistro.setText("Insertar un Caso")
+            self.editarRegistro.setText("Editar un Caso")
+            self.verRegistro.setText("Ver un Caso")
+            self.borrarRegistro.setText("Borrar un Caso")
+        # fin try
     # fin __init__
 
     def _borrar(self):

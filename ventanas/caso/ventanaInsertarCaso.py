@@ -18,15 +18,20 @@ class VentanaInsertarCaso(VentanaAccionMysql, Ui_VentanaCaso):
     _max = 1000000.0
 
     def __init__(self):
-        super(VentanaInsertarCaso, self).__init__()
-        self.setupUi(self)
-        self.botonAceptar.clicked.connect(self._accion)
-        self.botonCancelar.clicked.connect(self.close)
-        self.botonResetear.clicked.connect(self._resetear)
-        validadorDoble = QtGui.QDoubleValidator(
-            self._min, self._max, 2)
-        validadorDoble.setNotation(validadorDoble.StandardNotation)
-        self.inputMontante.setValidator(validadorDoble)
+        try:
+            super(VentanaInsertarCaso, self).__init__()
+        except ConnectionError:
+            raise ConnectionError
+        else:
+            self.setupUi(self)
+            self.botonAceptar.clicked.connect(self._accion)
+            self.botonCancelar.clicked.connect(self.close)
+            self.botonResetear.clicked.connect(self._resetear)
+            validadorDoble = QtGui.QDoubleValidator(
+                self._min, self._max, 2)
+            validadorDoble.setNotation(validadorDoble.StandardNotation)
+            self.inputMontante.setValidator(validadorDoble)
+        # fin try
     # fin __init__
 
     def _crearConsulta(self) -> str:

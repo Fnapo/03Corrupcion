@@ -8,3 +8,5 @@ class Caso(object):
         self.montante = montante
     # fin __init__
 # fin Caso
+
+# fin caso

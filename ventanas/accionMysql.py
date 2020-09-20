@@ -12,7 +12,10 @@ class AccionMysql(ConexionMysql):
     '''
 
     def __init__(self):
-        super(AccionMysql, self).__init__()
+        try:
+            super(AccionMysql, self).__init__()
+        except:
+            raise ConnectionError
     # fin __init__
 
     def _accion(self):

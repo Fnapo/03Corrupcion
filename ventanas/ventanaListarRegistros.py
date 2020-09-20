@@ -1,12 +1,11 @@
 # inicio ventanaListarRegistros
 
 from ventanas.ventanaLista import Ui_ventanaLista
-from PyQt5 import QtWidgets
-from ventanas.conexionMysql import ConexionMysql
+from ventanas.ventanaConexionMysql import VentanaConexionMysql
 from ventanas.errorCampoModal import ErrorCampoModal
 
 
-class VentanaListarRegistros(QtWidgets.QDialog, Ui_ventanaLista, ConexionMysql):
+class VentanaListarRegistros(VentanaConexionMysql, Ui_ventanaLista):
     '''
     Ventana abstracta que lista unos Registros para elegir uno de ellos.
     '''
@@ -15,15 +14,18 @@ class VentanaListarRegistros(QtWidgets.QDialog, Ui_ventanaLista, ConexionMysql):
     _anchura = 50
 
     def __init__(self):
-        super(VentanaListarRegistros, self).__init__()
-        self._salida = -1
-        self.setupUi(self)
         try:
-            ConexionMysql.__init__(self)
+            super(VentanaListarRegistros, self).__init__()
+        except ConnectionError:
+            self._salida = -2
+            raise ConnectionError
+        else:
+            self._salida = -1
+            self.setupUi(self)
             self._listaOrdenada = []
-            ConexionMysql._conexion.reconnect()
+            VentanaConexionMysql._conexion.reconnect()
             self._llenarListaOrdenada()
-            ConexionMysql._conexion.close()
+            VentanaConexionMysql._conexion.close()
             if len(self._listaOrdenada) > 0:
                 for item in self._listaOrdenada:
                     self.comboLista.addItem(item[0])
@@ -32,10 +34,7 @@ class VentanaListarRegistros(QtWidgets.QDialog, Ui_ventanaLista, ConexionMysql):
             else:
                 raise ValueError
             # fin if len
-        except:
-            self._salida = -2
-            raise ConnectionError
-        # fin try
+        # fin try conexion
     # fin __init__
 
     def verIDRegistro(self):
