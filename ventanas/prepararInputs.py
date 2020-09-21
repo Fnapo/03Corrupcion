@@ -74,6 +74,18 @@ class PrepararInputs:
     # fin prepararComoMoneda
 
     @ staticmethod
+    def separarTablaReferenciada(mensaje: str) -> str:
+        '''
+        Dado un mensaje de error tipo clave referencia separa la tabla de dicha clave
+        '''
+        inicioCampo = mensaje.find("`.`")+3
+        finCampo = mensaje.find("`", inicioCampo+ 1)
+        tabla = f"'{mensaje[inicioCampo:finCampo].capitalize()}'"
+
+        return tabla
+    # fin separarTablaReferenciada
+
+    @ staticmethod
     def separarValorCampo(mensaje: str) -> tuple:
         '''
         Dado un mensaje de error tipo valor duplicado separa dicho valor y el campo donde se ha realizado dicha duplicación y los retorna
@@ -87,15 +99,6 @@ class PrepararInputs:
 
         return valor, campo
     # fin separarValorCampo
-
-    @ staticmethod
-    def prepararMensajeDuplicado(valor, campo) -> str:
-        '''
-        Dado un valor duplicado y el campo correspondiente
-        devuelve el mensaje de error asociado
-        '''
-        return f"Error: el valor {valor} ya está usado en el campo {campo}."
-    # fin preparaMensajeDuplicado
 
     @ staticmethod
     def prepararCadenaCap(cadena: str) -> str:

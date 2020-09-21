@@ -13,16 +13,27 @@ def main():
     '''
     Función principal e inicial.
     '''
+
+    def salida(estado: int = 0):
+        app.beep()
+        print(f"Exit {estado}")
+    # fin salida
+
     app = QtWidgets.QApplication([])
     try:
+        estado = 1
         if not loginVeces():
-            sys.exit()
-    except ConnectionError:
-        pass
+            sys.exit(estado)
+    except (ConnectionError, SystemExit):
+        salida(estado)
     else:
-        ventanaInicial = VentanaPrincipal()
-        ventanaInicial.show()
-        sys.exit(app.exec_())
+        try:
+            ventanaInicial = VentanaPrincipal()
+            ventanaInicial.show()
+            sys.exit(app.exec_())
+        except SystemExit:
+            salida()
+        # fin ventanaInicial
     # fin loginVeces
 # fin main
 

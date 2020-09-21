@@ -33,10 +33,22 @@ class ErrorCampoModal(QtWidgets.QDialog, Ui_errorCampo):
     # fin errorDesconocido
 
     @staticmethod
+    def campoReferenciado(mensajeError: str):
+        '''
+        El campo está referenciado.
+        '''
+        errorCM = ErrorCampoModal("Error en el borrado")
+        tabla = PrepararInputs.separarTablaReferenciada(mensajeError)
+        cadena = f"No se puede borrar el registro\
+            \nPor estar Referenciado en la tabla {tabla}"
+        errorCM.mostrar(PrepararInputs.quitarEspaciosCentrales(cadena))
+    # fin campoReferenciado
+
+    @staticmethod
     def errorFaltaCampo(campo: str):
         '''
         Error tipo Campo sin seleccionar
-        '''        
+        '''
         vacia = ErrorCampoModal(f"Falta seleccionar {campo}")
         vacia.mostrar(f"Debes seleccionar ...\n{campo}")
     # fin errorFaltaCampo
@@ -45,7 +57,7 @@ class ErrorCampoModal(QtWidgets.QDialog, Ui_errorCampo):
     def errorSinRegistros(campos: str):
         '''
         Error tipo tabla sin registros
-        '''        
+        '''
         vacia = ErrorCampoModal(f"Sin {campos}")
         vacia.mostrar(f"Tabla sin {campos}")
     # fin errorSinRegistros
@@ -60,13 +72,13 @@ class ErrorCampoModal(QtWidgets.QDialog, Ui_errorCampo):
     # fin indiceIncorrecto
 
     @staticmethod
-    def errorFueraRango(campo: str, minimo: str, maximo:str):
+    def errorFueraRango(campo: str, minimo: str, maximo: str):
         '''
         Error del tipo valor no está entre dos valores
         '''
         errorCM = ErrorCampoModal()
         errorCM.mostrar(f"El {campo} debe estar entre\n{minimo} y\n{maximo}")
-    #fin
+    # fin
 
     @staticmethod
     def errorDuplicado(mensajeError: str):
@@ -76,8 +88,7 @@ class ErrorCampoModal(QtWidgets.QDialog, Ui_errorCampo):
         errorCM = ErrorCampoModal()
         valor, campo = PrepararInputs.separarValorCampo(
             mensajeError)
-        errorCM.mostrar(
-            PrepararInputs.prepararMensajeDuplicado(valor, campo))
+        errorCM.mostrar(f"Error: el valor {valor} ya está usado en el campo {campo}")
     # fin errorDuplicado
 
     @staticmethod
@@ -86,7 +97,8 @@ class ErrorCampoModal(QtWidgets.QDialog, Ui_errorCampo):
         Error del tipo campo corto
         '''
         errorCM = ErrorCampoModal()
-        errorCM.mostrar(f"Campo vacío o muy corto: '{campo}'\nMínimo {minimo} Caracteres")
+        errorCM.mostrar(
+            f"Campo vacío o muy corto: '{campo}'\nMínimo {minimo} Caracteres")
     # fin campoCorto
 
     @staticmethod

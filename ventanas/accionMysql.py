@@ -8,20 +8,24 @@ from ventanas.conexionMysql import ConexionMysql
 
 class AccionMysql(ConexionMysql):
     '''
-    Clase estática y abstracta (Interface) con una conexión para realizar una acción Mysql, en una clase hija.
+    Clase estática y abstracta con una conexión para realizar una acción Mysql, en una clase hija.
     '''
 
     def __init__(self):
         try:
             super(AccionMysql, self).__init__()
+            self._revisar = True
         except:
             raise ConnectionError
     # fin __init__
 
     def _accion(self):
-        self._prepararCampos()
+        validos = False
+        if self._revisar:
+            self._prepararCampos()
+            validos = self._validarCampos()
         errorNumero = 0
-        if self._validarCampos():
+        if validos or not self._revisar:
             self._conexion.reconnect()
             consulta = self._crearConsulta()
             try:
@@ -31,6 +35,9 @@ class AccionMysql(ConexionMysql):
                 if errorNumero == errorcode.ER_DUP_ENTRY:
                     # entrada duplicada
                     ErrorCampoModal.errorDuplicado(error.msg)
+                elif errorNumero == errorcode.ER_ROW_IS_REFERENCED_2:
+                    # fk_id en uso
+                    ErrorCampoModal.campoReferenciado(error.msg)
                 else:
                     ErrorCampoModal.errorDesconocido(error.msg)
                 # fin if entrada duplicada
@@ -41,7 +48,7 @@ class AccionMysql(ConexionMysql):
             # fin try ejecutar
             if errorNumero == 0:
                 self.close()
-        # fin if validar
+        # fin if validos
     # fin _accion
 
     def _obtenerCampos(self):

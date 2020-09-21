@@ -14,6 +14,7 @@ class VentanaBorrarCargo(VentanaEditarCargo):
     def __init__(self, identificador: int):
         try:
             super(VentanaBorrarCargo, self).__init__(identificador)
+            self._revisar = False
         except ConnectionError:
             raise ConnectionError
         except ValueError:

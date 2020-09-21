@@ -14,6 +14,7 @@ class VentanaBorrarPartido(VentanaEditarPartido):
     def __init__(self, identificador: int):
         try:
             super(VentanaBorrarPartido, self).__init__(identificador)
+            self._revisar = False            
         except ConnectionError:
             raise ConnectionError
         except ValueError:

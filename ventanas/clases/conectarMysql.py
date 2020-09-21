@@ -1,23 +1,24 @@
 # inicio conMysql.py
 
 import mysql.connector as conMysql
-from mysql.connector import errorcode
 from ventanas.errorCampoModal import ErrorCampoModal
 from PyQt5 import QtWidgets
+import os
+from dotenv import load_dotenv
 
 
 class ConectarMysql:
     '''
     Clase estática para crear una conexión con una BBDD tipo Mysql.
-    O para ejecutar una consulta a una BBDD
+    O para ejecutar una consulta a una BBDD.
     '''
 
     # atributos static
-    _configuracion = {
-        'user': 'root',
+    _configuracion =  {
+        'user': '',
         'password': '',
-        'host': '127.0.0.1',
-        'database': 'politica'
+        'host': '',
+        'database': ''
     }
 
     @staticmethod
@@ -26,6 +27,13 @@ class ConectarMysql:
         Crea y retorna una conexión a una BBDD tipo MySQL
         '''
         try:
+            if ConectarMysql._configuracion['host'] == '':
+                load_dotenv()
+                ConectarMysql._configuracion['user'] = os.getenv('user')
+                ConectarMysql._configuracion['password'] = os.getenv('password')
+                ConectarMysql._configuracion['host'] = os.getenv('host')
+                ConectarMysql._configuracion['database'] = os.getenv('database')
+            # fin if
             conexion = conMysql.connect(**ConectarMysql._configuracion)
         except:
             raise ConnectionError

@@ -15,6 +15,7 @@ class VentanaVerImputado(VentanaEditarImputado):
     def __init__(self, identificador: int):
         try:
             super(VentanaVerImputado, self).__init__(identificador)
+            self._revisar = False            
         except ConnectionError:
             raise ConnectionError
         except ValueError:
