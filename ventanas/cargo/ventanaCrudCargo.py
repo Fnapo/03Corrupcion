@@ -1,6 +1,7 @@
 # inicio ventanaCrudCargo
 
 from PyQt5 import QtWidgets
+from ventanas.errorCampoModal import ErrorCampoModal
 from ventanas.ventanaCrudRegistros import VentanaCrudRegistros
 from ventanas.cargo.ventanaListarCargos import VentanaListarCargos
 from ventanas.cargo.ventanaBorrarCargo import VentanaBorrarCargo
@@ -31,46 +32,61 @@ class VentanaCrudCargo(VentanaCrudRegistros):
         '''
         Función para borrar un Cargo.
         '''
-        ventana = VentanaListarCargos()
-        cadena = ventana.label.text()
-        cadena = cadena.replace("...", "para borrarlo")
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        if identificador > 0:
-            ventanaBorrar = VentanaBorrarCargo(identificador)
-            ventanaBorrar.exec_()
-        self.close()
+        try:
+            ventana = VentanaListarCargos()
+        except ValueError:
+            ErrorCampoModal.errorSinRegistros("Cargos")
+        else:
+            cadena = ventana.label.text()
+            cadena = cadena.replace("...", "para borrarlo")
+            ventana.exec_()
+            identificador = ventana.verIDRegistro()
+            if identificador > 0:
+                ventanaBorrar = VentanaBorrarCargo(identificador)
+                ventanaBorrar.exec_()
+        finally:
+            self.close()
     # fin _borrar
 
     def _ver(self):
         '''
         Función para ver un Cargo.
         '''
-        ventana = VentanaListarCargos()
-        cadena = ventana.label.text()
-        cadena = cadena.replace("...", "para verlo")
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        if identificador > 0:
-            ventanaVer = VentanaVerCargo(identificador)
-            ventanaVer.exec_()
-        self.close()
+        try:
+            ventana = VentanaListarCargos()
+        except ValueError:
+            ErrorCampoModal.errorSinRegistros("Cargos")
+        else:
+            cadena = ventana.label.text()
+            cadena = cadena.replace("...", "para verlo")
+            ventana.exec_()
+            identificador = ventana.verIDRegistro()
+            if identificador > 0:
+                ventanaVer = VentanaVerCargo(identificador)
+                ventanaVer.exec_()
+        finally:
+            self.close()
     # fin _ver
 
     def _editar(self):
         '''
         Función para editar un Cargo.
         '''
-        ventana = VentanaListarCargos()
-        cadena = ventana.label.text()
-        cadena = cadena.replace("...", "para editarlo")
-        ventana.label.setText(cadena)
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        if identificador > 0:
-            ventanaEditar = VentanaEditarCargo(identificador)
-            ventanaEditar.exec_()
-        self.close()
+        try:
+            ventana = VentanaListarCargos()
+        except ValueError:
+            ErrorCampoModal.errorSinRegistros("Cargos")
+        else:
+            cadena = ventana.label.text()
+            cadena = cadena.replace("...", "para editarlo")
+            ventana.label.setText(cadena)
+            ventana.exec_()
+            identificador = ventana.verIDRegistro()
+            if identificador > 0:
+                ventanaEditar = VentanaEditarCargo(identificador)
+                ventanaEditar.exec_()
+        finally:
+            self.close()
     # fin _editar
 
     def _crear(self):

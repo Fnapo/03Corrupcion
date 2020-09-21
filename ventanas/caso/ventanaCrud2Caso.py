@@ -1,6 +1,7 @@
 # inicio ventanaCrud2Caso
 
 from PyQt5 import QtWidgets
+from ventanas.errorCampoModal import ErrorCampoModal
 from ventanas.ventanaCrud2Registros import VentanaCrud2Registros
 from ventanas.caso.seleccionarCasos import SeleccionarCasos
 from ventanas.caso.ventanaListarCasos import VentanaListarCasos
@@ -73,46 +74,61 @@ class VentanaCrud2Caso(VentanaCrud2Registros):
         '''
         Función para borrar un Caso.
         '''
-        ventana = VentanaListarCasos()
-        cadena = ventana.label.text()
-        cadena = cadena.replace("...", "para borrarlo")
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        if identificador > 0:
-            ventanaBorrar = VentanaBorrarCaso(identificador)
-            ventanaBorrar.exec_()
-        self.close()
+        try:
+            ventana = VentanaListarCasos()
+        except ValueError:
+            ErrorCampoModal.errorSinRegistros("Casos")
+        else:
+            cadena = ventana.label.text()
+            cadena = cadena.replace("...", "para borrarlo")
+            ventana.exec_()
+            identificador = ventana.verIDRegistro()
+            if identificador > 0:
+                ventanaBorrar = VentanaBorrarCaso(identificador)
+                ventanaBorrar.exec_()
+        finally:
+            self.close()
     # fin _borrar
 
     def _ver(self):
         '''
         Función para ver un Caso.
         '''
-        ventana = VentanaListarCasos()
-        cadena = ventana.label.text()
-        cadena = cadena.replace("...", "para verlo")
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        if identificador > 0:
-            ventanaVer = VentanaVerCaso(identificador)
-            ventanaVer.exec_()
-        self.close()
+        try:
+            ventana = VentanaListarCasos()
+        except ValueError:
+            ErrorCampoModal.errorSinRegistros("Casos")
+        else:
+            cadena = ventana.label.text()
+            cadena = cadena.replace("...", "para verlo")
+            ventana.exec_()
+            identificador = ventana.verIDRegistro()
+            if identificador > 0:
+                ventanaVer = VentanaVerCaso(identificador)
+                ventanaVer.exec_()
+        finally:
+            self.close()
     # fin _ver
 
     def _editar(self):
         '''
         Función para editar un Caso.
         '''
-        ventana = VentanaListarCasos()
-        cadena = ventana.label.text()
-        cadena = cadena.replace("...", "para editarlo")
-        ventana.label.setText(cadena)
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        if identificador > 0:
-            ventanaEditar = VentanaEditarCaso(identificador)
-            ventanaEditar.exec_()
-        self.close()
+        try:
+            ventana = VentanaListarCasos()
+        except ValueError:
+            ErrorCampoModal.errorSinRegistros("Casos")
+        else:
+            cadena = ventana.label.text()
+            cadena = cadena.replace("...", "para editarlo")
+            ventana.label.setText(cadena)
+            ventana.exec_()
+            identificador = ventana.verIDRegistro()
+            if identificador > 0:
+                ventanaEditar = VentanaEditarCaso(identificador)
+                ventanaEditar.exec_()
+        finally:
+            self.close()
     # fin _editar
 
     def _crear(self):

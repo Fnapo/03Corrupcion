@@ -1,6 +1,7 @@
 # inicio ventanaCrud2Imputado
 
 from PyQt5 import QtWidgets
+from ventanas.errorCampoModal import ErrorCampoModal
 from ventanas.ventanaCrud2Registros import VentanaCrud2Registros
 from ventanas.imputado.seleccionarImputados import SeleccionarImputados
 from ventanas.imputado.ventanaListarImputados import VentanaListarImputados
@@ -73,46 +74,61 @@ class VentanaCrud2Imputado(VentanaCrud2Registros):
         '''
         Función para borrar un Imputado.
         '''
-        ventana = VentanaListarImputados()
-        cadena = ventana.label.text()
-        cadena = cadena.replace("...", "para borrarlo")
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        if identificador > 0:
-            ventanaBorrar = VentanaBorrarImputado(identificador)
-            ventanaBorrar.exec_()
-        self.close()
+        try:
+            ventana = VentanaListarImputados()
+        except ValueError:
+            ErrorCampoModal.errorSinRegistros("Imputados")
+        else:
+            cadena = ventana.label.text()
+            cadena = cadena.replace("...", "para borrarlo")
+            ventana.exec_()
+            identificador = ventana.verIDRegistro()
+            if identificador > 0:
+                ventanaBorrar = VentanaBorrarImputado(identificador)
+                ventanaBorrar.exec_()
+        finally:
+            self.close()
     # fin _borrar
 
     def _ver(self):
         '''
         Función para ver un Imputado.
         '''
-        ventana = VentanaListarImputados()
-        cadena = ventana.label.text()
-        cadena = cadena.replace("...", "para verlo")
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        if identificador > 0:
-            ventanaVer = VentanaVerImputado(identificador)
-            ventanaVer.exec_()
-        self.close()
+        try:
+            ventana = VentanaListarImputados()
+        except ValueError:
+            ErrorCampoModal.errorSinRegistros("Imputados")
+        else:
+            cadena = ventana.label.text()
+            cadena = cadena.replace("...", "para verlo")
+            ventana.exec_()
+            identificador = ventana.verIDRegistro()
+            if identificador > 0:
+                ventanaVer = VentanaVerImputado(identificador)
+                ventanaVer.exec_()
+        finally:
+            self.close()
     # fin _ver
 
     def _editar(self):
         '''
         Función para editar un Imputado.
         '''
-        ventana = VentanaListarImputados()
-        cadena = ventana.label.text()
-        cadena = cadena.replace("...", "para editarlo")
-        ventana.label.setText(cadena)
-        ventana.exec_()
-        identificador = ventana.verIDRegistro()
-        if identificador > 0:
-            ventanaEditar = VentanaEditarImputado(identificador)
-            ventanaEditar.exec_()
-        self.close()
+        try:
+            ventana = VentanaListarImputados()
+        except ValueError:
+            ErrorCampoModal.errorSinRegistros("Imputados")
+        else:
+            cadena = ventana.label.text()
+            cadena = cadena.replace("...", "para editarlo")
+            ventana.label.setText(cadena)
+            ventana.exec_()
+            identificador = ventana.verIDRegistro()
+            if identificador > 0:
+                ventanaEditar = VentanaEditarImputado(identificador)
+                ventanaEditar.exec_()
+        finally:
+            self.close()
     # fin _editar
 
     def _crear(self):
