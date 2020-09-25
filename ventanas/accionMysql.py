@@ -29,8 +29,9 @@ class AccionMysql(ConexionMysql):
             self._conexion.reconnect()
             consulta = self._crearConsulta()
             try:
-                ConectarMysql.ejecutar(self._conexion, consulta)
+                ConectarMysql.ejecutar(AccionMysql._conexion, consulta)
             except Exception as error:
+                self._resetearAutoIncremento()
                 errorNumero = error.errno
                 if errorNumero == errorcode.ER_DUP_ENTRY:
                     # entrada duplicada
@@ -50,6 +51,13 @@ class AccionMysql(ConexionMysql):
                 self.close()
         # fin if validos
     # fin _accion
+
+    def _resetearAutoIncremento(self):
+        '''
+        Resetea el ID autoincremental.
+        '''
+        raise NotImplementedError
+    # fin _resetearAutoIncremento
 
     def _obtenerCampos(self):
         '''

@@ -4,6 +4,7 @@ from PyQt5 import QtWidgets, QtGui
 from ventanas.prepararInputs import PrepararInputs
 from ventanas.ventanaAccionMysql import VentanaAccionMysql
 from ventanas.errorCampoModal import ErrorCampoModal
+from ventanas.clases.conectarMysql import ConectarMysql
 from ventanas.partido.insertarPartido import Ui_introducirPartido
 
 
@@ -25,6 +26,14 @@ class VentanaInsertarPartido(VentanaAccionMysql, Ui_introducirPartido):
             self.botonResetear.clicked.connect(self._resetear)
         # fin try
     # fin __init__
+
+    def _resetearAutoIncremento(self):
+        '''
+        Resetea el ID autoincremental.
+        '''
+        consulta = "ALTER TABLE partidos AUTO_INCREMENT = 1"
+        ConectarMysql.ejecutar(VentanaAccionMysql._conexion, consulta)
+    # fin _resetearAutoIncremento
 
     def _crearConsulta(self) -> str:
         '''

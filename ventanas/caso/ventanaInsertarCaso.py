@@ -5,6 +5,7 @@ from ventanas.caso.insertarCaso import Ui_VentanaCaso
 from ventanas.ventanaAccionMysql import VentanaAccionMysql
 from ventanas.prepararInputs import PrepararInputs
 from ventanas.errorCampoModal import ErrorCampoModal
+from ventanas.clases.conectarMysql import ConectarMysql
 import locale
 
 
@@ -33,6 +34,14 @@ class VentanaInsertarCaso(VentanaAccionMysql, Ui_VentanaCaso):
             self.inputMontante.setValidator(validadorDoble)
         # fin try
     # fin __init__
+
+    def _resetearAutoIncremento(self):
+        '''
+        Resetea el ID autoincremental.
+        '''
+        consulta = "ALTER TABLE casos AUTO_INCREMENT = 1"
+        ConectarMysql.ejecutar(VentanaAccionMysql._conexion, consulta)
+    # fin _resetearAutoIncremento
 
     def _crearConsulta(self) -> str:
         '''

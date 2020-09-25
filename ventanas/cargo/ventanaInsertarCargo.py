@@ -5,6 +5,7 @@ from ventanas.prepararInputs import PrepararInputs
 from ventanas.ventanaAccionMysql import VentanaAccionMysql
 from ventanas.errorCampoModal import ErrorCampoModal
 from ventanas.cargo.insertarCargo import Ui_insertarCargo
+from ventanas.clases.conectarMysql import ConectarMysql
 
 
 class VentanaInsertarCargo(VentanaAccionMysql, Ui_insertarCargo):
@@ -36,6 +37,14 @@ class VentanaInsertarCargo(VentanaAccionMysql, Ui_insertarCargo):
 
         return PrepararInputs.quitarEspaciosCentrales(consulta)
     # fin _crearConsulta
+
+    def _resetearAutoIncremento(self):
+        '''
+        Resetea el ID autoincremental.
+        '''
+        consulta = "ALTER TABLE cargos AUTO_INCREMENT = 1"
+        ConectarMysql.ejecutar(VentanaAccionMysql._conexion, consulta)
+    # fin _resetearAutoIncremento
 
     def _resetear(self):
         self.inputCargo.setText("")

@@ -9,6 +9,7 @@ from ventanas.imputado.insertarImputado import Ui_insertarImputado
 from ventanas.partido.seleccionarPartidos import SeleccionarPartidos
 from ventanas.partido.ventanaListarPartidos import VentanaListarPartidos
 from ventanas.cargo.seleccionarCargos import SeleccionarCargos
+from ventanas.clases.conectarMysql import ConectarMysql
 from ventanas.cargo.ventanaListarCargos import VentanaListarCargos
 
 
@@ -48,6 +49,14 @@ class VentanaInsertarImputado(VentanaAccionMysql, Ui_insertarImputado):
             self.inputFecha.setCalendarPopup(True)
         # fin try
     # fin __init__
+
+    def _resetearAutoIncremento(self):
+        '''
+        Resetea el ID autoincremental.
+        '''
+        consulta = "ALTER TABLE imputados AUTO_INCREMENT = 1"
+        ConectarMysql.ejecutar(VentanaAccionMysql._conexion, consulta)
+    # fin _resetearAutoIncremento
 
     def _llenarCargos(self):
         '''
